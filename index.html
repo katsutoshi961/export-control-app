@@ -43,9 +43,7 @@
 
     /* ── Header ── */
     #header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: linear-gradient(90deg, #0a2540 0%, #1a3a5c 100%);
       border-bottom: 2px solid rgba(30,144,255,.25);
       box-shadow: 0 2px 20px rgba(0,0,0,.45);
@@ -53,8 +51,8 @@
     }
     #header .inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
     #header .emoji { font-size: 26px; }
-    #header .sub  { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
-    #header .title{ font-size: 16px; font-weight: 900; color: #fff; letter-spacing: .4px; }
+    #header .sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+    #header .title { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: .4px; }
 
     /* ── Main ── */
     #main { max-width: 720px; margin: 0 auto; padding: 20px 14px calc(40px + var(--safe-bot)); }
@@ -70,27 +68,18 @@
 
     /* ── Form ── */
     label.field-label {
-      display: block;
-      font-weight: 700;
-      font-size: 12px;
-      color: var(--text);
-      margin-bottom: 6px;
-      margin-top: 14px;
+      display: block; font-weight: 700; font-size: 12px;
+      color: var(--text); margin-bottom: 6px; margin-top: 14px;
     }
     label.field-label:first-child { margin-top: 0; }
     .req { color: var(--danger); }
 
     input[type=text], textarea {
-      width: 100%;
-      padding: 11px 13px;
-      border: 1.5px solid #dde3ed;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 14px;
-      background: #f8faff;
-      outline: none;
-      transition: border-color .2s;
-      -webkit-appearance: none;
+      width: 100%; padding: 11px 13px;
+      border: 1.5px solid #dde3ed; border-radius: 8px;
+      font-family: inherit; font-size: 14px;
+      background: #f8faff; outline: none;
+      transition: border-color .2s; -webkit-appearance: none;
     }
     input[type=text]:focus, textarea:focus { border-color: var(--accent); }
     textarea { resize: vertical; line-height: 1.6; }
@@ -98,226 +87,126 @@
     /* ── Radio tabs ── */
     .radio-group { display: flex; gap: 8px; margin-top: 6px; }
     .radio-group label {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 10px 6px;
-      border: 2px solid #dde3ed;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 700;
-      color: #666;
-      background: #fafafa;
-      transition: all .15s;
-      text-align: center;
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; gap: 4px; padding: 10px 6px;
+      border: 2px solid #dde3ed; border-radius: 10px;
+      cursor: pointer; font-size: 11px; font-weight: 700;
+      color: #666; background: #fafafa;
+      transition: all .15s; text-align: center;
       -webkit-tap-highlight-color: transparent;
     }
     .radio-group input { display: none; }
-    .radio-group input:checked + span + span,
-    .radio-group label.selected {
-      color: var(--accent);
-    }
-    .radio-group label.selected {
-      border-color: var(--accent);
-      background: #e8f4ff;
-      color: var(--accent);
-    }
+    .radio-group label.selected { border-color: var(--accent); background: #e8f4ff; color: var(--accent); }
     .radio-group label .icon { font-size: 20px; }
 
-    /* ── Button ── */
-    #btn-search {
-      width: 100%;
-      margin-top: 18px;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
+    /* ── Buttons ── */
+    .btn-primary {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
       background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent) 100%);
-      color: #fff;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: .8px;
-      cursor: pointer;
+      color: #fff; font-family: inherit; font-size: 15px;
+      font-weight: 900; letter-spacing: .8px; cursor: pointer;
       box-shadow: 0 4px 16px rgba(30,144,255,.35);
-      transition: opacity .2s;
-      -webkit-appearance: none;
+      transition: opacity .2s; -webkit-appearance: none;
+      margin-top: 8px;
     }
-    #btn-search:disabled { background: #95a5a6; box-shadow: none; cursor: not-allowed; }
+    .btn-primary:active { opacity: .85; }
+
+    .btn-claude {
+      width: 100%; padding: 16px; border: none; border-radius: 12px;
+      background: linear-gradient(90deg, #c47a2e 0%, #e8a030 100%);
+      color: #fff; font-family: inherit; font-size: 16px;
+      font-weight: 900; letter-spacing: .5px; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(200,120,40,.4);
+      transition: opacity .2s; -webkit-appearance: none;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-claude:active { opacity: .85; }
+
+    .btn-copy {
+      width: 100%; padding: 12px; border: 2px solid var(--accent); border-radius: 10px;
+      background: transparent; color: var(--accent);
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all .2s; -webkit-appearance: none;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-copy:active { background: #e8f4ff; }
 
     /* ── Error ── */
     #error-msg {
-      display: none;
-      background: #fdecea;
-      color: var(--danger);
-      border: 1px solid #f5c6c2;
-      border-radius: 8px;
-      padding: 10px 13px;
-      font-size: 13px;
-      margin-top: 12px;
+      display: none; background: #fdecea; color: var(--danger);
+      border: 1px solid #f5c6c2; border-radius: 8px;
+      padding: 10px 13px; font-size: 13px; margin-top: 12px;
     }
 
-    /* ── Spinner ── */
-    .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 3px solid rgba(255,255,255,.35);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ── Step2: Prompt area ── */
+    #step2 { display: none; }
 
-    /* ── Results ── */
-    #results { display: none; }
-
-    .summary-card {
-      background: rgba(255,255,255,.97);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.2);
-      border-left: 5px solid #7f8c8d;
-    }
-    .summary-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-    .summary-title { font-weight: 900; font-size: 14px; }
-    .risk-badge-main {
-      margin-left: auto;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      border: 1.5px solid;
-    }
-    .summary-text { font-size: 13px; line-height: 1.8; color: #2c3e50; }
-
-    /* ── Candidate card ── */
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 700;
-      color: #ccc;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+    .step-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-dark); color: #fff;
+      font-size: 11px; font-weight: 800; padding: 4px 12px;
+      border-radius: 20px; margin-bottom: 14px;
+      letter-spacing: .5px;
     }
 
-    .candidate {
-      border-radius: 10px;
-      margin-bottom: 12px;
-      background: #fff;
-      box-shadow: 0 1px 6px rgba(0,0,0,.08);
-      overflow: hidden;
-      border: 1.5px solid #eee;
-    }
-    .candidate-header {
-      padding: 13px 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .cat-icon { font-size: 20px; flex-shrink: 0; }
-    .candidate-meta { flex: 1; min-width: 0; }
-    .item-number {
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-bottom: 4px;
-    }
-    .item-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 3px; }
-    .cat-name  { font-size: 11px; color: var(--muted); }
-    .chevron { color: #bbb; font-size: 14px; transition: transform .2s; flex-shrink: 0; }
-    .chevron.open { transform: rotate(90deg); }
-
-    .candidate-detail {
-      display: none;
-      padding: 0 14px 14px;
-      border-top: 1px solid #f0f0f0;
-    }
-    .candidate-detail.open { display: block; }
-
-    .detail-section { margin-top: 10px; }
-    .detail-label { font-size: 10px; font-weight: 700; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-    .detail-body {
-      font-size: 12px;
-      color: #2c3e50;
-      line-height: 1.75;
-      background: #f8f9fa;
-      border-radius: 7px;
-      padding: 8px 11px;
-    }
-    .related-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-    .related-tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+    .prompt-box {
       background: #f0f4ff;
-      color: #2c3e87;
-      padding: 2px 8px;
-      border-radius: 6px;
-      border: 1px solid #c5cef0;
+      border: 1.5px solid #c5d5f5;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 12px;
+      line-height: 1.75;
+      color: #2c3e50;
+      font-family: 'IBM Plex Mono', monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 14px;
     }
 
-    /* risk badge small */
-    .risk-badge {
-      display: inline-block;
-      padding: 2px 9px;
-      border-radius: 20px;
-      font-size: 10px;
-      font-weight: 800;
-      border: 1px solid;
-      margin-left: 4px;
-    }
-
-    /* ── Catch-all ── */
-    .catchall-card {
+    .how-to {
       background: #fff9e6;
-      border: 1.5px solid #f39c12;
-      border-radius: 12px;
+      border: 1.5px solid #f0c040;
+      border-radius: 10px;
       padding: 14px;
       margin-bottom: 14px;
     }
-    .catchall-title { font-weight: 800; font-size: 12px; color: var(--warn); margin-bottom: 6px; }
-    .catchall-body  { font-size: 13px; color: #5d4037; line-height: 1.75; }
+    .how-to-title { font-weight: 800; font-size: 12px; color: #a06000; margin-bottom: 8px; }
+    .how-to ol { padding-left: 18px; }
+    .how-to li { font-size: 12px; color: #5d4037; line-height: 1.9; }
 
-    /* ── Next steps ── */
-    .nextsteps-title { font-weight: 800; font-size: 13px; color: var(--text); margin-bottom: 10px; }
-    .nextsteps-list { padding-left: 18px; }
-    .nextsteps-list li { font-size: 13px; color: #2c3e50; line-height: 1.8; margin-bottom: 3px; }
+    .divider { height: 1px; background: #eee; margin: 14px 0; }
+
+    .copy-ok {
+      display: none; text-align: center; color: var(--ok);
+      font-size: 13px; font-weight: 700; margin-top: 8px;
+    }
 
     /* ── Disclaimer ── */
     .disclaimer {
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 10px;
-      padding: 11px 13px;
-      font-size: 10px;
-      color: #6c757d;
-      line-height: 1.7;
+      background: #f8f9fa; border: 1px solid #dee2e6;
+      border-radius: 10px; padding: 11px 13px;
+      font-size: 10px; color: #6c757d; line-height: 1.7;
+      margin-top: 14px;
     }
 
-    /* ── Install banner ── */
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #aaa; font-size: 12px; cursor: pointer;
+      margin-bottom: 14px; -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Install Banner ── */
     #install-banner {
-      display: none;
-      position: fixed;
-      bottom: calc(16px + var(--safe-bot));
-      left: 50%;
+      display: none; position: fixed;
+      bottom: calc(16px + var(--safe-bot)); left: 50%;
       transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 400px;
-      background: #fff;
-      border-radius: 14px;
+      width: calc(100% - 32px); max-width: 400px;
+      background: #fff; border-radius: 14px;
       box-shadow: 0 8px 32px rgba(0,0,0,.3);
-      padding: 14px 16px;
-      z-index: 200;
+      padding: 14px 16px; z-index: 200;
       border: 1.5px solid var(--accent);
     }
     #install-banner .banner-title { font-weight: 800; font-size: 13px; color: var(--text); margin-bottom: 4px; }
@@ -344,71 +233,75 @@
   </div>
 </div>
 
-<!-- Main -->
 <div id="main">
 
-  <!-- Input Card -->
-  <div class="card">
-    <label class="field-label">品名・製品名 <span class="req">*</span></label>
-    <input type="text" id="inp-name" placeholder="例：高周波増幅器、炭素繊維、暗号化ソフトウェア" autocomplete="off" />
+  <!-- ── STEP 1: 入力フォーム ── -->
+  <div id="step1">
+    <div class="card">
+      <label class="field-label">品名・製品名 <span class="req">*</span></label>
+      <input type="text" id="inp-name" placeholder="例：高周波増幅器、炭素繊維、暗号化ソフトウェア" autocomplete="off" />
 
-    <label class="field-label">用途・仕様・スペック（詳しいほど精度向上）</label>
-    <textarea id="inp-usage" rows="4" placeholder="例：周波数帯域 1〜18GHz、軍用規格対応、航空機搭載用電子機器との組み合わせ使用を想定"></textarea>
+      <label class="field-label">用途・仕様・スペック（詳しいほど精度向上）</label>
+      <textarea id="inp-usage" rows="4"
+        placeholder="例：周波数帯域 1〜18GHz、軍用規格対応、航空機搭載用電子機器との組み合わせ使用を想定"></textarea>
 
-    <label class="field-label">対象区分</label>
-    <div class="radio-group" id="radio-group">
-      <label id="lbl-goods" class="selected" onclick="selectType('goods')">
-        <input type="radio" name="type" value="goods" checked />
-        <span class="icon">📦</span>
-        <span>貨物<br>（有形品）</span>
-      </label>
-      <label id="lbl-tech" onclick="selectType('tech')">
-        <input type="radio" name="type" value="tech" />
-        <span class="icon">💡</span>
-        <span>技術・役務<br>（無形）</span>
-      </label>
-      <label id="lbl-both" onclick="selectType('both')">
-        <input type="radio" name="type" value="both" />
-        <span class="icon">🔍</span>
-        <span>両方・<br>不明</span>
-      </label>
+      <label class="field-label">対象区分</label>
+      <div class="radio-group">
+        <label id="lbl-goods" class="selected" onclick="selectType('goods')">
+          <input type="radio" name="type" value="goods" checked />
+          <span class="icon">📦</span><span>貨物<br>（有形品）</span>
+        </label>
+        <label id="lbl-tech" onclick="selectType('tech')">
+          <input type="radio" name="type" value="tech" />
+          <span class="icon">💡</span><span>技術・役務<br>（無形）</span>
+        </label>
+        <label id="lbl-both" onclick="selectType('both')">
+          <input type="radio" name="type" value="both" />
+          <span class="icon">🔍</span><span>両方・<br>不明</span>
+        </label>
+      </div>
+
+      <div id="error-msg"></div>
+      <button class="btn-primary" onclick="generatePrompt()">📝 調査プロンプトを生成する</button>
     </div>
 
-    <div id="error-msg"></div>
-
-    <button id="btn-search" onclick="doSearch()">🔍 項番を調査する</button>
+    <div class="disclaimer">
+      ※ このツールはAIによる参考情報の提供を目的としており、法的判断の根拠とはなりません。輸出許可申請・非該当証明等の最終判断は必ず専門家または経済産業省にご確認ください。
+    </div>
   </div>
 
-  <!-- Results -->
-  <div id="results">
+  <!-- ── STEP 2: プロンプト表示 ── -->
+  <div id="step2">
+    <div class="back-link" onclick="goBack()">◀ 入力に戻る</div>
 
-    <!-- Summary -->
-    <div class="summary-card" id="summary-card">
-      <div class="summary-header">
-        <span>📋</span>
-        <span class="summary-title">調査サマリー</span>
-        <span class="risk-badge-main" id="badge-overall"></span>
+    <div class="card">
+      <div class="step-badge">✅ STEP 1 完了 — プロンプト生成済み</div>
+
+      <div class="prompt-box" id="prompt-box"></div>
+
+      <button class="btn-copy" onclick="copyPrompt()" id="btn-copy">
+        📋 プロンプトをコピー
+      </button>
+      <div class="copy-ok" id="copy-ok">✅ コピーしました！</div>
+
+      <div class="divider"></div>
+
+      <div class="how-to">
+        <div class="how-to-title">📱 使い方（STEP 2）</div>
+        <ol>
+          <li>上の「📋 プロンプトをコピー」をタップ</li>
+          <li>下の「🤖 Claude.aiで開く」をタップ</li>
+          <li>Claudeの入力欄を<strong>長押し → 「ペースト」</strong></li>
+          <li>送信ボタンをタップ → 項番候補が表示されます</li>
+        </ol>
       </div>
-      <div class="summary-text" id="summary-text"></div>
+
+      <button class="btn-claude" onclick="openClaude()">
+        <span style="font-size:22px">🤖</span>
+        <span>Claude.aiで開く</span>
+      </button>
     </div>
 
-    <!-- Candidates -->
-    <div class="section-label" id="cand-label"></div>
-    <div id="candidates-list"></div>
-
-    <!-- Catch-all -->
-    <div class="catchall-card" id="catchall-card" style="display:none">
-      <div class="catchall-title">⚠️ キャッチオール規制（外為令16条）</div>
-      <div class="catchall-body" id="catchall-body"></div>
-    </div>
-
-    <!-- Next Steps -->
-    <div class="card" id="nextsteps-card" style="display:none">
-      <div class="nextsteps-title">✅ 推奨される次のアクション</div>
-      <ol class="nextsteps-list" id="nextsteps-list"></ol>
-    </div>
-
-    <!-- Disclaimer -->
     <div class="disclaimer">
       ※ このツールはAIによる参考情報の提供を目的としており、法的判断の根拠とはなりません。輸出許可申請・非該当証明等の最終判断は必ず専門家または経済産業省にご確認ください。
     </div>
@@ -416,10 +309,10 @@
 
 </div>
 
-<!-- Install Banner -->
+<!-- Install Banner (Android) -->
 <div id="install-banner">
   <div class="banner-title">📱 ホーム画面に追加</div>
-  <div class="banner-body">アプリとしてインストールするとオフラインでも使えます</div>
+  <div class="banner-body">アプリとしてインストールするとすぐに起動できます</div>
   <div class="banner-btns">
     <button id="btn-install" onclick="installApp()">追加する</button>
     <button id="btn-dismiss" onclick="dismissBanner()">後で</button>
@@ -427,227 +320,118 @@
 </div>
 
 <script>
-// ── Category map ──
-const CAT = {
-  "1":  { label:"武器",              color:"#c0392b", icon:"⚔️"  },
-  "2":  { label:"原子力",            color:"#8e44ad", icon:"☢️"  },
-  "3":  { label:"化学・生物兵器",    color:"#16a085", icon:"🧪"  },
-  "4":  { label:"ミサイル",          color:"#d35400", icon:"🚀"  },
-  "5":  { label:"先端材料",          color:"#2980b9", icon:"🔬"  },
-  "6":  { label:"材料加工",          color:"#27ae60", icon:"⚙️"  },
-  "7":  { label:"エレクトロニクス",  color:"#f39c12", icon:"💾"  },
-  "8":  { label:"コンピュータ",      color:"#1abc9c", icon:"🖥️"  },
-  "9":  { label:"通信・情報セキュリティ", color:"#3498db", icon:"📡" },
-  "10": { label:"センサー・レーザー", color:"#9b59b6", icon:"🔭"  },
-  "11": { label:"航法・航空電子",    color:"#e74c3c", icon:"✈️"  },
-  "12": { label:"海洋関連",          color:"#2c3e50", icon:"⚓"  },
-  "13": { label:"推進装置",          color:"#e67e22", icon:"🛸"  },
-  "15": { label:"その他貨物・技術",  color:"#7f8c8d", icon:"📦"  },
-};
+  let currentType = 'goods';
+  let generatedPrompt = '';
 
-const RISK = {
-  high:    { label:"要許可の可能性高", bg:"#fdecea", color:"#c0392b", border:"#e74c3c" },
-  medium:  { label:"確認推奨",         bg:"#fef9e7", color:"#d35400", border:"#f39c12" },
-  low:     { label:"該当可能性低",     bg:"#eafaf1", color:"#1e8449", border:"#27ae60" },
-  unknown: { label:"判断困難",         bg:"#f2f3f4", color:"#5d6d7e", border:"#aab7b8" },
-};
+  function selectType(t) {
+    currentType = t;
+    ['goods','tech','both'].forEach(v =>
+      document.getElementById('lbl-'+v).classList.toggle('selected', v===t)
+    );
+  }
 
-// ── Type selection ──
-let currentType = "goods";
-function selectType(t) {
-  currentType = t;
-  ["goods","tech","both"].forEach(v => {
-    document.getElementById("lbl-"+v).classList.toggle("selected", v===t);
-  });
-}
+  function generatePrompt() {
+    const name  = document.getElementById('inp-name').value.trim();
+    const usage = document.getElementById('inp-usage').value.trim();
+    const errEl = document.getElementById('error-msg');
 
-// ── Search ──
-async function doSearch() {
-  const name  = document.getElementById("inp-name").value.trim();
-  const usage = document.getElementById("inp-usage").value.trim();
-  const errEl = document.getElementById("error-msg");
-
-  if (!name) { showError("品名を入力してください"); return; }
-  errEl.style.display = "none";
-
-  const btn = document.getElementById("btn-search");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>AIが調査中...';
-  document.getElementById("results").style.display = "none";
-
-  const typeLabel = currentType==="goods" ? "貨物（有形品）"
-                  : currentType==="tech"  ? "技術・役務（無形）"
-                  : "貨物または技術・役務";
-
-  const system = `あなたは日本の輸出貿易管理令（輸出令）および外国為替及び外国貿易法（外為法）の専門家です。
-ユーザーが入力した品名・用途から、輸出貿易管理令別表第1の該当項番の候補を分析し、以下のJSON形式のみで回答してください。前置き・後書き・Markdownコードブロックは不要です。
-
-{
-  "summary": "全体的な規制リスクの概要（2〜3文）",
-  "overallRisk": "high|medium|low|unknown",
-  "candidates": [
-    {
-      "itemNumber": "1-2(1)のような形式",
-      "categoryNumber": "1〜15の数字のみ",
-      "itemName": "規制品目の名称",
-      "riskLevel": "high|medium|low|unknown",
-      "reason": "この項番に該当する可能性がある理由",
-      "regulation": "主な規制内容・スペック閾値など",
-      "licenseNote": "許可申請の要否と注意点",
-      "exclusion": "非該当・除外になり得るケース",
-      "relatedItems": ["関連する他の項番（任意）"]
+    if (!name) {
+      errEl.textContent = '品名を入力してください';
+      errEl.style.display = 'block';
+      return;
     }
-  ],
-  "catchAll": "外為令16条（キャッチオール規制）の該当可能性と注意点",
-  "nextSteps": ["推奨される次のアクション（箇条書き）"]
-}`;
+    errEl.style.display = 'none';
 
-  const user = `以下の品目について輸出貿易管理令の該当項番を調査してください。
+    const typeLabel =
+      currentType === 'goods' ? '貨物（有形品）' :
+      currentType === 'tech'  ? '技術・役務（無形）' : '貨物または技術・役務';
+
+    generatedPrompt =
+`あなたは輸出貿易管理令（輸出令）および外国為替及び外国貿易法（外為法）の専門家です。
+以下の品目について輸出貿易管理令別表第1の該当項番を調査してください。
 
 【品名】${name}
-【用途・仕様】${usage || "（未記入）"}
+【用途・仕様】${usage || '（未記入）'}
 【対象区分】${typeLabel}
 
-候補となる項番を全て列挙し、リスクレベルも評価してください。`;
+以下の形式で回答してください。
 
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system,
-        messages: [{ role:"user", content: user }],
-      }),
-    });
-    const data = await res.json();
-    const text = (data.content || []).filter(b=>b.type==="text").map(b=>b.text).join("");
-    const parsed = JSON.parse(text.replace(/```json|```/g,"").trim());
-    renderResult(parsed);
-  } catch(e) {
-    showError("通信エラーが発生しました。ネットワーク接続をご確認の上、再度お試しください。");
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = "🔍 項番を調査する";
+■ 総合リスク評価（高・中・低・判断困難）
+■ 該当項番の候補（全て列挙）
+　各候補について：
+　・項番
+　・規制品目名
+　・リスクレベル
+　・該当する理由
+　・主な規制内容・スペック閾値
+　・許可申請の要否と注意点
+　・非該当・除外になり得るケース
+　・関連する他の項番（あれば）
+■ キャッチオール規制（外為令16条）の該当可能性
+■ 推奨される次のアクション`;
+
+    document.getElementById('prompt-box').textContent = generatedPrompt;
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-}
 
-function showError(msg) {
-  const el = document.getElementById("error-msg");
-  el.textContent = msg;
-  el.style.display = "block";
-}
+  function copyPrompt() {
+    navigator.clipboard.writeText(generatedPrompt).then(() => {
+      const ok = document.getElementById('copy-ok');
+      const btn = document.getElementById('btn-copy');
+      ok.style.display = 'block';
+      btn.textContent = '✅ コピー済み';
+      setTimeout(() => {
+        ok.style.display = 'none';
+        btn.innerHTML = '📋 プロンプトをコピー';
+      }, 2500);
+    }).catch(() => {
+      // フォールバック：選択状態にする
+      const box = document.getElementById('prompt-box');
+      const range = document.createRange();
+      range.selectNodeContents(box);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      alert('テキストを選択しました。長押し→「コピー」してください。');
+    });
+  }
 
-// ── Render ──
-function renderResult(r) {
-  // Summary
-  const risk = RISK[r.overallRisk] || RISK.unknown;
-  const sc = document.getElementById("summary-card");
-  sc.style.borderLeftColor = risk.color;
-  const bo = document.getElementById("badge-overall");
-  bo.textContent = "総合リスク：" + risk.label;
-  bo.style.cssText += `background:${risk.bg};color:${risk.color};border-color:${risk.border};`;
-  document.getElementById("summary-text").textContent = r.summary || "";
+  function openClaude() {
+    window.open('https://claude.ai', '_blank');
+  }
 
-  // Candidates
-  const cl = document.getElementById("cand-label");
-  cl.textContent = `CANDIDATES (${(r.candidates||[]).length})`;
-  const list = document.getElementById("candidates-list");
-  list.innerHTML = "";
-  (r.candidates || []).forEach((item, idx) => {
-    const cat = CAT[item.categoryNumber] || { label:"その他", color:"#7f8c8d", icon:"📦" };
-    const rr  = RISK[item.riskLevel] || RISK.unknown;
-    const div = document.createElement("div");
-    div.className = "candidate";
-    div.style.borderLeft = `4px solid ${cat.color}`;
-    div.style.borderColor = cat.color + "40";
-    div.innerHTML = `
-      <div class="candidate-header" onclick="toggleCard(this)">
-        <span class="cat-icon">${cat.icon}</span>
-        <div class="candidate-meta">
-          <div>
-            <span class="item-number" style="background:${cat.color}18;color:${cat.color}">${item.itemNumber||""}</span>
-            <span class="risk-badge" style="background:${rr.bg};color:${rr.color};border-color:${rr.border}">${rr.label}</span>
-          </div>
-          <div class="item-name">${item.itemName||""}</div>
-          <div class="cat-name">${cat.label}カテゴリ</div>
-        </div>
-        <span class="chevron">▶</span>
-      </div>
-      <div class="candidate-detail">
-        ${detailSection("該当理由", item.reason)}
-        ${detailSection("主な規制内容", item.regulation)}
-        ${detailSection("許可申請の要否", item.licenseNote)}
-        ${detailSection("除外・非該当の可能性", item.exclusion)}
-        ${item.relatedItems?.length ? `
-          <div class="detail-section">
-            <div class="detail-label">関連項番</div>
-            <div class="related-tags">${item.relatedItems.map(t=>`<span class="related-tag">${t}</span>`).join("")}</div>
-          </div>` : ""}
-      </div>`;
-    list.appendChild(div);
+  function goBack() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── PWA Install (Android Chrome) ──
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('install-banner').style.display = 'block';
   });
+  async function installApp() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    dismissBanner();
+  }
+  function dismissBanner() {
+    document.getElementById('install-banner').style.display = 'none';
+  }
 
-  // Catch-all
-  const cc = document.getElementById("catchall-card");
-  if (r.catchAll) {
-    document.getElementById("catchall-body").textContent = r.catchAll;
-    cc.style.display = "block";
-  } else { cc.style.display = "none"; }
-
-  // Next steps
-  const nc = document.getElementById("nextsteps-card");
-  const nl = document.getElementById("nextsteps-list");
-  if (r.nextSteps?.length) {
-    nl.innerHTML = r.nextSteps.map(s=>`<li>${s}</li>`).join("");
-    nc.style.display = "block";
-  } else { nc.style.display = "none"; }
-
-  document.getElementById("results").style.display = "block";
-  document.getElementById("results").scrollIntoView({ behavior:"smooth", block:"start" });
-}
-
-function detailSection(label, content) {
-  if (!content) return "";
-  return `<div class="detail-section">
-    <div class="detail-label">${label}</div>
-    <div class="detail-body">${content}</div>
-  </div>`;
-}
-
-function toggleCard(header) {
-  const detail  = header.nextElementSibling;
-  const chevron = header.querySelector(".chevron");
-  const open = detail.classList.toggle("open");
-  chevron.classList.toggle("open", open);
-}
-
-// ── PWA Install ──
-let deferredPrompt = null;
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById("install-banner").style.display = "block";
-});
-
-async function installApp() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  dismissBanner();
-}
-function dismissBanner() {
-  document.getElementById("install-banner").style.display = "none";
-}
-
-// ── Service Worker ──
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
-}
+  // ── Service Worker ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>
