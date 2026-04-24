@@ -1,6 +1,6 @@
 {
   "name": "輸出貿易管理令 項番調査",
-  "short_name": "輸出管理令",
+  "short_name": "輸出管理令2",
   "description": "品名・用途を入力して輸出貿易管理令の該当項番をAIが調査します",
   "start_url": "./index.html",
   "display": "standalone",
