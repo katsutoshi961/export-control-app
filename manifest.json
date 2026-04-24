@@ -1,0 +1,25 @@
+{
+  "name": "輸出貿易管理令 項番調査",
+  "short_name": "輸出管理令",
+  "description": "品名・用途を入力して輸出貿易管理令の該当項番をAIが調査します",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a2540",
+  "theme_color": "#0a2540",
+  "orientation": "portrait",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
