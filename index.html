@@ -4,433 +4,638 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>輸出貿易管理令 項番調査</title>
-  <meta name="description" content="品名・用途を入力して輸出貿易管理令の該当項番をAIが調査します" />
-  <meta name="theme-color" content="#0a2540" />
-  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="輸出管理令" />
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-  <link rel="icon" type="image/png" href="./icons/icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0d1b2a;
-      --bg2: #1b2a3b;
-      --surface: #ffffff;
-      --accent: #1e90ff;
-      --accent-dark: #1e3a8a;
-      --text: #1a1a2e;
-      --muted: #7f8c8d;
-      --danger: #c0392b;
-      --warn: #d35400;
-      --ok: #27ae60;
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bot: env(safe-area-inset-bottom, 0px);
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --border: #30363d;
+      --accent: #e6a817;
+      --accent2: #c87e00;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --green: #3fb950;
+      --red: #f85149;
+      --blue: #58a6ff;
+      --radius: 10px;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
-      min-height: 100dvh;
+      background: var(--bg);
       color: var(--text);
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
-    /* ── Header ── */
-    #header {
-      position: sticky; top: 0; z-index: 100;
-      background: linear-gradient(90deg, #0a2540 0%, #1a3a5c 100%);
-      border-bottom: 2px solid rgba(30,144,255,.25);
-      box-shadow: 0 2px 20px rgba(0,0,0,.45);
-      padding: calc(12px + var(--safe-top)) 16px 12px;
+    /* ── ヘッダー ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    #header .inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
-    #header .emoji { font-size: 26px; }
-    #header .sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
-    #header .title { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: .4px; }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .header-icon {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .law-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-top: 2px;
+    }
+    .law-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
 
-    /* ── Main ── */
-    #main { max-width: 720px; margin: 0 auto; padding: 20px 14px calc(40px + var(--safe-bot)); }
+    /* ── タブ ── */
+    .tabs {
+      display: flex;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      gap: 4px;
+    }
+    .tab {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
 
-    /* ── Card ── */
+    /* ── メインコンテンツ ── */
+    .main { padding: 16px; max-width: 680px; margin: 0 auto; }
+
+    /* ── パネル ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── カード ── */
     .card {
-      background: rgba(255,255,255,.97);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.28);
-      margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
     }
 
-    /* ── Form ── */
-    label.field-label {
-      display: block; font-weight: 700; font-size: 12px;
-      color: var(--text); margin-bottom: 6px; margin-top: 14px;
+    /* ── フォーム要素 ── */
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      margin-top: 12px;
     }
-    label.field-label:first-child { margin-top: 0; }
-    .req { color: var(--danger); }
+    label:first-of-type { margin-top: 0; }
 
-    input[type=text], textarea {
-      width: 100%; padding: 11px 13px;
-      border: 1.5px solid #dde3ed; border-radius: 8px;
-      font-family: inherit; font-size: 14px;
-      background: #f8faff; outline: none;
-      transition: border-color .2s; -webkit-appearance: none;
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
     }
-    input[type=text]:focus, textarea:focus { border-color: var(--accent); }
-    textarea { resize: vertical; line-height: 1.6; }
-
-    /* ── Radio tabs ── */
-    .radio-group { display: flex; gap: 8px; margin-top: 6px; }
-    .radio-group label {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; gap: 4px; padding: 10px 6px;
-      border: 2px solid #dde3ed; border-radius: 10px;
-      cursor: pointer; font-size: 11px; font-weight: 700;
-      color: #666; background: #fafafa;
-      transition: all .15s; text-align: center;
-      -webkit-tap-highlight-color: transparent;
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
     }
-    .radio-group input { display: none; }
-    .radio-group label.selected { border-color: var(--accent); background: #e8f4ff; color: var(--accent); }
-    .radio-group label .icon { font-size: 20px; }
+    textarea { resize: vertical; min-height: 80px; }
 
-    /* ── Buttons ── */
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    /* ── ボタン ── */
+    .btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
     .btn-primary {
-      width: 100%; padding: 14px; border: none; border-radius: 10px;
-      background: linear-gradient(90deg, var(--accent-dark) 0%, var(--accent) 100%);
-      color: #fff; font-family: inherit; font-size: 15px;
-      font-weight: 900; letter-spacing: .8px; cursor: pointer;
-      box-shadow: 0 4px 16px rgba(30,144,255,.35);
-      transition: opacity .2s; -webkit-appearance: none;
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:active { background: var(--accent2); transform: scale(0.98); }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
       margin-top: 8px;
     }
-    .btn-primary:active { opacity: .85; }
+    .btn-secondary:active { background: var(--border); transform: scale(0.98); }
 
-    .btn-claude {
-      width: 100%; padding: 16px; border: none; border-radius: 12px;
-      background: linear-gradient(90deg, #c47a2e 0%, #e8a030 100%);
-      color: #fff; font-family: inherit; font-size: 16px;
-      font-weight: 900; letter-spacing: .5px; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(200,120,40,.4);
-      transition: opacity .2s; -webkit-appearance: none;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
+    .btn-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      margin-top: 8px;
     }
-    .btn-claude:active { opacity: .85; }
+    .btn-outline:active { background: rgba(88,166,255,0.1); }
 
-    .btn-copy {
-      width: 100%; padding: 12px; border: 2px solid var(--accent); border-radius: 10px;
-      background: transparent; color: var(--accent);
-      font-family: inherit; font-size: 14px; font-weight: 700;
-      cursor: pointer; transition: all .2s; -webkit-appearance: none;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-copy:active { background: #e8f4ff; }
-
-    /* ── Error ── */
-    #error-msg {
-      display: none; background: #fdecea; color: var(--danger);
-      border: 1px solid #f5c6c2; border-radius: 8px;
-      padding: 10px 13px; font-size: 13px; margin-top: 12px;
-    }
-
-    /* ── Step2: Prompt area ── */
-    #step2 { display: none; }
-
-    .step-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--accent-dark); color: #fff;
-      font-size: 11px; font-weight: 800; padding: 4px 12px;
-      border-radius: 20px; margin-bottom: 14px;
-      letter-spacing: .5px;
-    }
-
+    /* ── プロンプト出力 ── */
     .prompt-box {
-      background: #f0f4ff;
-      border: 1.5px solid #c5d5f5;
-      border-radius: 10px;
-      padding: 14px;
+      display: none;
+      margin-top: 12px;
+    }
+    .prompt-box.show { display: block; }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .prompt-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .copy-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:active { background: var(--border); }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+    .prompt-text {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
       font-size: 12px;
-      line-height: 1.75;
-      color: #2c3e50;
-      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1.6;
+      color: var(--text);
       white-space: pre-wrap;
-      word-break: break-all;
-      max-height: 200px;
+      word-break: break-word;
+      max-height: 240px;
       overflow-y: auto;
-      margin-bottom: 14px;
     }
 
-    .how-to {
-      background: #fff9e6;
-      border: 1.5px solid #f0c040;
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 14px;
+    /* ── 法令情報カード ── */
+    .law-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
-    .how-to-title { font-weight: 800; font-size: 12px; color: #a06000; margin-bottom: 8px; }
-    .how-to ol { padding-left: 18px; }
-    .how-to li { font-size: 12px; color: #5d4037; line-height: 1.9; }
+    .law-info-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .law-info-item .lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .law-info-item .val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .law-info-item .val.warning { color: var(--accent); }
+    .law-info-item .val.ok { color: var(--green); }
 
-    .divider { height: 1px; background: #eee; margin: 14px 0; }
+    /* 改正履歴リスト */
+    .revision-list { list-style: none; }
+    .revision-list li {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .revision-list li:last-child { border-bottom: none; }
+    .revision-date {
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+      min-width: 100px;
+    }
+    .revision-desc { color: var(--text-muted); }
 
-    .copy-ok {
-      display: none; text-align: center; color: var(--ok);
-      font-size: 13px; font-weight: 700; margin-top: 8px;
+    /* ── ステップバッジ ── */
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
     }
+    .step-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 13px; line-height: 1.5; color: var(--text); }
 
-    /* ── Disclaimer ── */
-    .disclaimer {
-      background: #f8f9fa; border: 1px solid #dee2e6;
-      border-radius: 10px; padding: 11px 13px;
-      font-size: 10px; color: #6c757d; line-height: 1.7;
-      margin-top: 14px;
+    /* ── 注意バナー ── */
+    .notice {
+      background: rgba(230,168,23,0.08);
+      border: 1px solid rgba(230,168,23,0.3);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
     }
-
-    /* ── Back link ── */
-    .back-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #aaa; font-size: 12px; cursor: pointer;
-      margin-bottom: 14px; -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ── Install Banner ── */
-    #install-banner {
-      display: none; position: fixed;
-      bottom: calc(16px + var(--safe-bot)); left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 32px); max-width: 400px;
-      background: #fff; border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.3);
-      padding: 14px 16px; z-index: 200;
-      border: 1.5px solid var(--accent);
-    }
-    #install-banner .banner-title { font-weight: 800; font-size: 13px; color: var(--text); margin-bottom: 4px; }
-    #install-banner .banner-body  { font-size: 11px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
-    #install-banner .banner-btns  { display: flex; gap: 8px; }
-    #install-banner button {
-      flex: 1; padding: 9px; border: none; border-radius: 8px;
-      font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
-    }
-    #btn-install { background: var(--accent); color: #fff; }
-    #btn-dismiss { background: #f0f0f0; color: #555; }
+    .notice strong { color: var(--accent); }
   </style>
 </head>
 <body>
 
-<!-- Header -->
-<div id="header">
-  <div class="inner">
-    <span class="emoji">🛃</span>
+<header>
+  <div class="header-top">
+    <div class="header-icon">🛃</div>
     <div>
-      <div class="sub">Ministry of Economy, Trade and Industry</div>
-      <div class="title">輸出貿易管理令 項番調査ツール</div>
+      <h1>輸出貿易管理令 項番調査</h1>
     </div>
   </div>
+  <div class="law-badge">
+    <span class="dot"></span>
+    参照法令：輸出貿易管理令（昭和24年政令第378号）&nbsp;／&nbsp;最終確認改正：<strong>令和8年2月14日施行</strong>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('inquiry')">📋 項番調査</div>
+  <div class="tab" onclick="switchTab('revision')">🔔 改正確認</div>
+  <div class="tab" onclick="switchTab('howto')">❓ 使い方</div>
 </div>
 
-<div id="main">
+<div class="main">
 
-  <!-- ── STEP 1: 入力フォーム ── -->
-  <div id="step1">
-    <div class="card">
-      <label class="field-label">品名・製品名 <span class="req">*</span></label>
-      <input type="text" id="inp-name" placeholder="例：高周波増幅器、炭素繊維、暗号化ソフトウェア" autocomplete="off" />
+  <!-- ───── パネル1：項番調査 ───── -->
+  <div id="panel-inquiry" class="panel active">
 
-      <label class="field-label">用途・仕様・スペック（詳しいほど精度向上）</label>
-      <textarea id="inp-usage" rows="4"
-        placeholder="例：周波数帯域 1〜18GHz、軍用規格対応、航空機搭載用電子機器との組み合わせ使用を想定"></textarea>
-
-      <label class="field-label">対象区分</label>
-      <div class="radio-group">
-        <label id="lbl-goods" class="selected" onclick="selectType('goods')">
-          <input type="radio" name="type" value="goods" checked />
-          <span class="icon">📦</span><span>貨物<br>（有形品）</span>
-        </label>
-        <label id="lbl-tech" onclick="selectType('tech')">
-          <input type="radio" name="type" value="tech" />
-          <span class="icon">💡</span><span>技術・役務<br>（無形）</span>
-        </label>
-        <label id="lbl-both" onclick="selectType('both')">
-          <input type="radio" name="type" value="both" />
-          <span class="icon">🔍</span><span>両方・<br>不明</span>
-        </label>
-      </div>
-
-      <div id="error-msg"></div>
-      <button class="btn-primary" onclick="generatePrompt()">📝 調査プロンプトを生成する</button>
+    <div class="notice">
+      <strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省または専門家にご確認ください。
     </div>
-
-    <div class="disclaimer">
-      ※ このツールはAIによる参考情報の提供を目的としており、法的判断の根拠とはなりません。輸出許可申請・非該当証明等の最終判断は必ず専門家または経済産業省にご確認ください。
-    </div>
-  </div>
-
-  <!-- ── STEP 2: プロンプト表示 ── -->
-  <div id="step2">
-    <div class="back-link" onclick="goBack()">◀ 入力に戻る</div>
 
     <div class="card">
-      <div class="step-badge">✅ STEP 1 完了 — プロンプト生成済み</div>
+      <div class="card-title">貨物・役務の情報入力</div>
 
-      <div class="prompt-box" id="prompt-box"></div>
+      <label>品名・製品名</label>
+      <input type="text" id="item-name" placeholder="例：赤外線カメラモジュール" />
 
-      <button class="btn-copy" onclick="copyPrompt()" id="btn-copy">
-        📋 プロンプトをコピー
-      </button>
-      <div class="copy-ok" id="copy-ok">✅ コピーしました！</div>
+      <label>用途・最終需要者</label>
+      <textarea id="item-use" placeholder="例：工場設備の温度監視用途。納入先は国内メーカー。"></textarea>
 
-      <div class="divider"></div>
+      <label>仕向国</label>
+      <input type="text" id="dest-country" placeholder="例：中国、インド、ドイツ" />
 
-      <div class="how-to">
-        <div class="how-to-title">📱 使い方（STEP 2）</div>
-        <ol>
-          <li>上の「📋 プロンプトをコピー」をタップ</li>
-          <li>下の「🤖 Claude.aiで開く」をタップ</li>
-          <li>Claudeの入力欄を<strong>長押し → 「ペースト」</strong></li>
-          <li>送信ボタンをタップ → 項番候補が表示されます</li>
-        </ol>
+      <label>調査種別</label>
+      <select id="inquiry-type">
+        <option value="both">貨物・役務（両方）</option>
+        <option value="cargo">貨物のみ</option>
+        <option value="service">役務（技術）のみ</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" onclick="generateInquiryPrompt()">プロンプトを生成する</button>
+
+    <div class="prompt-box" id="inquiry-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-inquiry" onclick="copyPrompt('inquiry')">コピー</button>
       </div>
-
-      <button class="btn-claude" onclick="openClaude()">
-        <span style="font-size:22px">🤖</span>
-        <span>Claude.aiで開く</span>
-      </button>
-    </div>
-
-    <div class="disclaimer">
-      ※ このツールはAIによる参考情報の提供を目的としており、法的判断の根拠とはなりません。輸出許可申請・非該当証明等の最終判断は必ず専門家または経済産業省にご確認ください。
+      <div class="prompt-text" id="inquiry-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
     </div>
   </div>
 
-</div>
+  <!-- ───── パネル2：改正確認 ───── -->
+  <div id="panel-revision" class="panel">
 
-<!-- Install Banner (Android) -->
-<div id="install-banner">
-  <div class="banner-title">📱 ホーム画面に追加</div>
-  <div class="banner-body">アプリとしてインストールするとすぐに起動できます</div>
-  <div class="banner-btns">
-    <button id="btn-install" onclick="installApp()">追加する</button>
-    <button id="btn-dismiss" onclick="dismissBanner()">後で</button>
+    <div class="card">
+      <div class="card-title">⚖ 本ツール参照法令の基準日</div>
+      <div class="law-info-grid">
+        <div class="law-info-item">
+          <div class="lbl">参照法令</div>
+          <div class="val">輸出貿易管理令</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">原令公布</div>
+          <div class="val">昭和24年政令第378号</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">AIの学習基準</div>
+          <div class="val warning">〜令和7年11月頃</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">最新確認済改正</div>
+          <div class="val warning">令和8年2月14日施行</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 直近の主な改正履歴（経産省確認済）</div>
+      <ul class="revision-list">
+        <li>
+          <span class="revision-date">R8.2.14施行</span>
+          <span class="revision-desc">国際輸出管理レジーム会合の合意に基づく規制対象貨物の見直し（省令・通達）</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.30施行</span>
+          <span class="revision-desc">「輸出貿易管理令の運用について」等の通達一部改正</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.14施行</span>
+          <span class="revision-desc">技術管理強化のための官民対話スキームに係る対象技術の追加（告示）</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.11.15施行</span>
+          <span class="revision-desc">噴霧乾燥器の規制見直し・プログラム記録媒体の同一再提供特例化・一時的な武器持ち出しの特例化</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.10.9施行</span>
+          <span class="revision-desc">補完的輸出規制の見直し</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.5.28施行</span>
+          <span class="revision-desc">工作機械に対する輸出管理の見直し</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔍 最新改正確認プロンプト（経産省HPを確認する）</div>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">
+        以下のプロンプトをClaude.aiに貼り付けると、令和8年2月14日以降の改正有無を調査させることができます。
+      </p>
+      <button class="btn btn-primary" onclick="generateRevisionPrompt()">改正確認プロンプトを生成</button>
+
+      <div class="prompt-box" id="revision-prompt-box">
+        <div class="prompt-header">
+          <span class="prompt-label">改正確認プロンプト</span>
+          <button class="copy-btn" id="copy-btn-revision" onclick="copyPrompt('revision')">コピー</button>
+        </div>
+        <div class="prompt-text" id="revision-prompt-text"></div>
+        <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- ───── パネル3：使い方 ───── -->
+  <div id="panel-howto" class="panel">
+    <div class="card">
+      <div class="card-title">📋 項番調査の使い方</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">「項番調査」タブで品名・用途・仕向国を入力し、「プロンプトを生成する」をタップ</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">生成されたプロンプトを「コピー」し、「Claude.aiで開く」をタップ</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Claude.aiの入力欄に貼り付けて送信。AIが項番候補と根拠条文を回答</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-text">結果に「参照法令：令和〇年〇月〇日施行」が明記されているか確認する</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔔 改正確認の使い方</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">「改正確認」タブで直近の改正履歴を確認</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">「改正確認プロンプトを生成」をタップしてプロンプトをコピー</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Claude.aiに貼り付けて送信。経産省HPの改正情報ページを確認した結果を返す</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-text">新たな改正が確認されたら、このツールの改正履歴に追記して管理する</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠ 重要な注意点</div>
+      <p style="font-size:12px; color:var(--text-muted); line-height:1.8;">
+        ・AIの回答はあくまで<strong style="color:var(--accent)">参考情報</strong>です。<br>
+        ・最終的な該非判定の責任は通関業者・輸出者が負います。<br>
+        ・グレーゾーン案件は必ず経済産業省へ照会してください。<br>
+        ・AIの知識は令和7年11月頃までが基準です。<br>
+        ・「改正確認」タブで定期的に最新情報を確認することを推奨します。
+      </p>
+    </div>
+  </div>
+
+</div><!-- /main -->
 
 <script>
-  let currentType = 'goods';
-  let generatedPrompt = '';
-
-  function selectType(t) {
-    currentType = t;
-    ['goods','tech','both'].forEach(v =>
-      document.getElementById('lbl-'+v).classList.toggle('selected', v===t)
-    );
+  // ── タブ切替 ──
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      const ids = ['inquiry','revision','howto'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
   }
 
-  function generatePrompt() {
-    const name  = document.getElementById('inp-name').value.trim();
-    const usage = document.getElementById('inp-usage').value.trim();
-    const errEl = document.getElementById('error-msg');
+  // ── 項番調査プロンプト生成 ──
+  function generateInquiryPrompt() {
+    const name = document.getElementById('item-name').value.trim();
+    const use  = document.getElementById('item-use').value.trim();
+    const dest = document.getElementById('dest-country').value.trim();
+    const type = document.getElementById('inquiry-type').value;
 
-    if (!name) {
-      errEl.textContent = '品名を入力してください';
-      errEl.style.display = 'block';
-      return;
-    }
-    errEl.style.display = 'none';
+    if (!name) { alert('品名・製品名を入力してください'); return; }
 
-    const typeLabel =
-      currentType === 'goods' ? '貨物（有形品）' :
-      currentType === 'tech'  ? '技術・役務（無形）' : '貨物または技術・役務';
+    const typeLabel = type === 'cargo' ? '貨物' : type === 'service' ? '役務（技術）' : '貨物・役務（両方）';
 
-    generatedPrompt =
-`あなたは輸出貿易管理令（輸出令）および外国為替及び外国貿易法（外為法）の専門家です。
-以下の品目について輸出貿易管理令別表第1の該当項番を調査してください。
+    const prompt =
+`【輸出貿易管理令 項番調査依頼】
 
-【品名】${name}
-【用途・仕様】${usage || '（未記入）'}
-【対象区分】${typeLabel}
+▼ 調査対象：${typeLabel}
+▼ 品名・製品名：${name}
+▼ 用途・最終需要者：${use || '（未入力）'}
+▼ 仕向国：${dest || '（未入力）'}
 
-以下の形式で回答してください。
+以下の手順で調査・回答してください。
 
-■ 総合リスク評価（高・中・低・判断困難）
-■ 該当項番の候補（全て列挙）
-　各候補について：
-　・項番
-　・規制品目名
-　・リスクレベル
-　・該当する理由
-　・主な規制内容・スペック閾値
-　・許可申請の要否と注意点
-　・非該当・除外になり得るケース
-　・関連する他の項番（あれば）
-■ キャッチオール規制（外為令16条）の該当可能性
-■ 推奨される次のアクション`;
+1. 参照した輸出貿易管理令の施行年月日を最初に明記してください。
+   例：「参照法令：輸出貿易管理令（令和〇年〇月〇日施行版）」
 
-    document.getElementById('prompt-box').textContent = generatedPrompt;
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+2. 上記貨物・役務が輸出貿易管理令別表第一の該当項番候補を3〜5件提示してください。
+   各候補について以下を明記：
+   ・項番（例：2の項(1)）
+   ・該当理由（スペック・用途との対応）
+   ・非該当の可能性がある場合はその根拠も記載
+
+3. 補完的輸出規制（キャッチオール規制）の観点から懸念がある場合は明記してください。
+
+4. 確認を推奨する関係省令・告示があれば併記してください。
+
+5. 最後に「この回答は参考情報であり、最終的な該非判定は経済産業省または専門家への確認が必要です」と付記してください。`;
+
+    document.getElementById('inquiry-prompt-text').textContent = prompt;
+    const box = document.getElementById('inquiry-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function copyPrompt() {
-    navigator.clipboard.writeText(generatedPrompt).then(() => {
-      const ok = document.getElementById('copy-ok');
-      const btn = document.getElementById('btn-copy');
-      ok.style.display = 'block';
-      btn.textContent = '✅ コピー済み';
+  // ── 改正確認プロンプト生成 ──
+  function generateRevisionPrompt() {
+    const prompt =
+`【輸出貿易管理令 改正確認依頼】
+
+以下の条件でウェブ検索を行い、最新の改正情報を調査してください。
+
+▼ 調査対象法令：輸出貿易管理令（昭和24年政令第378号）
+▼ 確認済み最終改正：令和8年2月14日施行
+▼ 調査対象：令和8年2月14日以降に公布・施行された改正の有無
+
+【調査手順】
+1. 経済産業省 安全保障貿易管理ページ（https://www.meti.go.jp/policy/anpo/law09-2.html）を確認する
+2. 令和8年2月14日より後の日付で記載された改正情報があるか確認する
+3. 改正がある場合：施行日・改正内容の概要・影響する規制品目（別表番号）を箇条書きで報告する
+4. 改正がない場合：「令和8年2月14日施行以降の改正は確認されませんでした」と明記する
+
+【出力形式】
+・確認日時（本日の日付）
+・確認先URL
+・改正有無の結論
+・改正がある場合の詳細リスト
+・注意すべき品目カテゴリがあれば追記`;
+
+    document.getElementById('revision-prompt-text').textContent = prompt;
+    const box = document.getElementById('revision-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── コピー ──
+  function copyPrompt(type) {
+    const text = document.getElementById(type + '-prompt-text').textContent;
+    const btn  = document.getElementById('copy-btn-' + type);
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ コピー済';
+      btn.classList.add('copied');
       setTimeout(() => {
-        ok.style.display = 'none';
-        btn.innerHTML = '📋 プロンプトをコピー';
-      }, 2500);
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
     }).catch(() => {
-      // フォールバック：選択状態にする
-      const box = document.getElementById('prompt-box');
-      const range = document.createRange();
-      range.selectNodeContents(box);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      alert('テキストを選択しました。長押し→「コピー」してください。');
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ コピー済';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
     });
   }
 
+  // ── Claude.aiを開く ──
   function openClaude() {
     window.open('https://claude.ai', '_blank');
-  }
-
-  function goBack() {
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('step1').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // ── PWA Install (Android Chrome) ──
-  let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById('install-banner').style.display = 'block';
-  });
-  async function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    dismissBanner();
-  }
-  function dismissBanner() {
-    document.getElementById('install-banner').style.display = 'none';
-  }
-
-  // ── Service Worker ──
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
   }
 </script>
 </body>
