@@ -215,6 +215,8 @@
   <div class="tab active" onclick="switchTab('inquiry')">📋 輸出管理令</div>
   <div class="tab" onclick="switchTab('gaiatsu')">🌐 外為法</div>
   <div class="tab" onclick="switchTab('customs')">📦 関税法</div>
+  <div class="tab" onclick="switchTab('food')">🍱 食品衛生法</div>
+  <div class="tab" onclick="switchTab('plant')">🌿 植物防疫法</div>
   <div class="tab" onclick="switchTab('howto')">❓ 使い方</div>
 </div>
 
@@ -455,7 +457,170 @@
 </div>
 
 
-<!-- ══════════ パネル④：使い方 ══════════ -->
+<!-- ══════════ パネル④：食品衛生法 ══════════ -->
+<div id="panel-food" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず厚生労働省検疫所または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">食品衛生法・食品安全基本法</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">厚生労働省・消費者庁</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和7年度監視指導計画</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の改正・運用情報</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R7年度</span><span class="revision-desc">令和7年度輸入食品監視指導計画を策定・公表。検査命令・モニタリング検査の対象品目・強化国を更新</span></li>
+      <li><span class="revision-date">R5.6施行</span><span class="revision-desc">食品衛生法施行規則の一部改正：食品等のリコール（自主回収）情報の行政への報告義務化</span></li>
+      <li><span class="revision-date">R3.6施行</span><span class="revision-desc">営業許可制度の見直し・営業届出制度の創設（34種→32種に再編）</span></li>
+      <li><span class="revision-date">R2.6施行</span><span class="revision-desc">HACCPに沿った衛生管理の制度化（全食品等事業者に義務化）</span></li>
+      <li><span class="revision-date">随時更新</span><span class="revision-desc">検査命令対象品目・国の追加・解除（違反事例に基づき随時）。厚労省HPで最新情報を確認</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>食品衛生法の法改正は比較的少ないが、<strong style="color:var(--accent)">検査命令・モニタリング強化品目は随時更新</strong>されます。輸入前に必ず厚労省HPの最新情報を確認してください。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 輸入適合確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">食品等の情報入力</div>
+    <label>品名・食品名</label>
+    <input type="text" id="food-item" placeholder="例：冷凍エビ、農薬残留基準確認用野菜、食品添加物" />
+    <label>原産国・製造国</label>
+    <input type="text" id="food-origin" placeholder="例：タイ、中国、ベトナム" />
+    <label>品目の種類</label>
+    <select id="food-type">
+      <option value="food">食品・飲料</option>
+      <option value="additive">食品添加物</option>
+      <option value="container">器具・容器包装</option>
+      <option value="meat">食肉・食肉製品</option>
+      <option value="fish">水産物・水産加工品</option>
+      <option value="other">その他（乳幼児用品等）</option>
+    </select>
+    <label>確認したい事項</label>
+    <textarea id="food-concern" placeholder="例：残留農薬基準、添加物使用基準、検査命令の有無、衛生証明書の要否"></textarea>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateFoodPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="food-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-food" onclick="copyPrompt('food')">コピー</button>
+      </div>
+      <div class="prompt-text" id="food-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正・検査命令確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">最新の検査命令対象品目・モニタリング強化情報を厚労省HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('food')">確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-food-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-food" onclick="copyPrompt('revision-food')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-food-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑤：植物防疫法 ══════════ -->
+<div id="panel-plant" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず農林水産省植物防疫所または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">植物防疫法・植物防疫法施行規則</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">農林水産省植物防疫所</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和7年6月告示改正</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の主な改正履歴</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R7.6告示改正</span><span class="revision-desc">輸入植物検疫規程別表の一部改正（農林水産省告示第989号）：検疫有害動植物の対象見直し</span></li>
+      <li><span class="revision-date">R7.3〜4</span><span class="revision-desc">植物防疫法施行規則別表一の有害動植物（農林水産大臣指定）の一部改正パブコメ実施</span></li>
+      <li><span class="revision-date">R6.11施行</span><span class="revision-desc">植物防疫法施行規則の一部改正（令和6年農林水産省令第57号）</span></li>
+      <li><span class="revision-date">R5.8.5施行</span><span class="revision-desc">検査証明書の添付が必要な植物の拡大：穀類（コメ・ムギ・トウモロコシ等）、飼料・肥料・農林業用生産資材（ピートモス・ココピート等）が新たに対象化</span></li>
+      <li><span class="revision-date">R5.4.1施行</span><span class="revision-desc">植物防疫法の大改正（令和4年法改正）施行：侵入雑草・種子を有害植物として正式定義、中古農業機械を検疫指定物品に追加</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>R5年の改正により<strong style="color:var(--accent)">穀類・飼料・肥料・培養資材等に検査証明書が必要</strong>になりました。輸入条件は品目・原産国・部位・加工度により異なります。必ず植物防疫所のデータベースで確認してください。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 輸入検疫確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">植物等の情報入力</div>
+    <label>植物名・品目名</label>
+    <input type="text" id="plant-item" placeholder="例：大豆、切り花（バラ）、ピートモス、中古農業機械" />
+    <label>原産国・発送国</label>
+    <input type="text" id="plant-origin" placeholder="例：アメリカ、オランダ、カナダ" />
+    <label>品目の種類</label>
+    <select id="plant-type">
+      <option value="grain">穀類・豆類</option>
+      <option value="fresh">生鮮植物（切花・果実・野菜）</option>
+      <option value="seed">種子・球根・苗</option>
+      <option value="feed">飼料・肥料・農林業用生産資材</option>
+      <option value="wood">木材・木材こん包材</option>
+      <option value="machine">中古農業機械</option>
+      <option value="other">その他加工植物製品</option>
+    </select>
+    <label>確認したい事項</label>
+    <textarea id="plant-concern" placeholder="例：検査証明書の要否、輸入禁止品の該当確認、検疫指定物品への該当"></textarea>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generatePlantPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="plant-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-plant" onclick="copyPrompt('plant')">コピー</button>
+      </div>
+      <div class="prompt-text" id="plant-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">令和7年6月以降の告示改正・施行規則改正有無を農水省HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('plant')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-plant-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-plant" onclick="copyPrompt('revision-plant')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-plant-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑥：使い方 ══════════ -->
 <div id="panel-howto" class="panel">
   <div class="card">
     <div class="card-title">📋 各タブ共通の使い方</div>
@@ -481,7 +646,7 @@
 
 <script>
   function switchTab(id) {
-    const ids = ['inquiry','gaiatsu','customs','howto'];
+    const ids = ['inquiry','gaiatsu','customs','food','plant','howto'];
     document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ids[i] === id));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
@@ -613,6 +778,18 @@
         lastDate: '令和8年4月1日施行',
         url: 'https://www.customs.go.jp/kaisei/hourei.htm',
         ministry: '税関 所管法令等一覧ページ'
+      },
+      food: {
+        name: '食品衛生法（昭和22年法律第233号）',
+        lastDate: '令和7年度監視指導計画・最新検査命令情報',
+        url: 'https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/shokuhin/yunyu_kanshi/index.html',
+        ministry: '厚生労働省 輸入食品監視業務ページ'
+      },
+      plant: {
+        name: '植物防疫法（昭和25年法律第151号）・施行規則',
+        lastDate: '令和7年6月告示改正（農林水産省告示第989号）',
+        url: 'https://www.maff.go.jp/pps/j/law/index.html',
+        ministry: '農林水産省植物防疫所 法令・通達ページ'
       }
     };
     const c = configs[law];
@@ -660,6 +837,87 @@
     const ta = document.createElement('textarea');
     ta.value = text; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
+  }
+
+  function generateFoodPrompt() {
+    const item    = document.getElementById('food-item').value.trim();
+    const origin  = document.getElementById('food-origin').value.trim();
+    const type    = document.getElementById('food-type').value;
+    const concern = document.getElementById('food-concern').value.trim();
+    if (!item) { alert('品名・食品名を入力してください'); return; }
+    const typeLabel = {food:'食品・飲料', additive:'食品添加物', container:'器具・容器包装', meat:'食肉・食肉製品', fish:'水産物・水産加工品', other:'その他'}[type];
+    showPrompt('food',
+`【食品衛生法 輸入適合確認依頼】
+
+▼ 品名：${item}
+▼ 原産国・製造国：${origin || '（未入力）'}
+▼ 品目の種類：${typeLabel}
+▼ 確認事項：${concern || '総合確認'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した食品衛生法の施行年月日を最初に明記してください。
+   例：「参照法令：食品衛生法（令和〇年〇月〇日施行版）」
+
+2. 【輸入届出の要否】
+   食品衛生法第27条に基づく食品等輸入届出の要否を確認してください。
+   届出不要品目（原塩・コプラ・粗糖・粗留アルコール等）に該当するか確認してください。
+
+3. 【規格基準・成分規格の確認】
+   ・食品、添加物等の規格基準（厚生省告示第370号）への適合確認事項
+   ・残留農薬基準（ポジティブリスト制度）の確認が必要な場合は明記
+   ・添加物の使用基準・製造基準の確認が必要な場合は明記
+
+4. 【検査命令・モニタリング検査】
+   ・現在、当該品目・原産国の組み合わせで検査命令が発令されている可能性を確認
+   ・モニタリング検査強化対象となっている可能性を確認
+   ※最新情報は厚生労働省HPで必ず確認が必要な旨を付記してください
+
+5. 【衛生証明書・必要書類】
+   衛生証明書が必要な品目（食肉・食肉製品・生食用かき・ふぐ等）に該当するか確認してください。
+
+6. 最後に「この回答は参考情報であり、最終的な判断は厚生労働省検疫所または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generatePlantPrompt() {
+    const item    = document.getElementById('plant-item').value.trim();
+    const origin  = document.getElementById('plant-origin').value.trim();
+    const type    = document.getElementById('plant-type').value;
+    const concern = document.getElementById('plant-concern').value.trim();
+    if (!item) { alert('植物名・品目名を入力してください'); return; }
+    const typeLabel = {grain:'穀類・豆類', fresh:'生鮮植物（切花・果実・野菜）', seed:'種子・球根・苗', feed:'飼料・肥料・農林業用生産資材', wood:'木材・木材こん包材', machine:'中古農業機械', other:'その他加工植物製品'}[type];
+    showPrompt('plant',
+`【植物防疫法 輸入検疫確認依頼】
+
+▼ 植物名・品目名：${item}
+▼ 原産国・発送国：${origin || '（未入力）'}
+▼ 品目の種類：${typeLabel}
+▼ 確認事項：${concern || '総合確認'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した植物防疫法・施行規則の施行年月日を最初に明記してください。
+   例：「参照法令：植物防疫法施行規則（令和〇年〇月〇日施行版）」
+
+2. 【輸入禁止品の確認】
+   植物防疫法第7条の輸入禁止品に該当するか確認してください。
+   ・禁止地域（発送国・経由国）からの輸入制限の有無
+   ・禁止植物・禁止物品への該当可能性
+
+3. 【検査証明書の要否】
+   ・輸出国政府機関発行の検査証明書（フィトサニタリー）の添付が必要か確認
+   ・令和5年8月5日施行の改正により新たに対象となった品目（穀類・飼料・肥料・培養資材等）に該当するか確認
+   ・栽培地検査証明書が必要な品目・地域に該当するか確認
+
+4. 【輸入検疫の手続き】
+   ・植物防疫所への届出・検査の手順
+   ・検疫指定物品（中古農業機械等）への該当確認
+   ・木材こん包材のISDM15号処理証明の要否
+
+5. 【輸入条件データベースの確認推奨】
+   農林水産省植物防疫所の輸入条件データベース（https://www.maff.go.jp/pps/）で最新の輸入条件を確認するよう促してください。
+
+6. 最後に「この回答は参考情報であり、最終的な判断は農林水産省植物防疫所または専門家への確認が必要です」と付記してください。`);
   }
 
   function openClaude() { window.open('https://claude.ai', '_blank'); }
