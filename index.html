@@ -1213,4 +1213,1183 @@
   });
 </script>
 </body>
+</html>    .header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .header-icon {
+      width: 34px; height: 34px; background: var(--accent);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    header h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.2; }
+    .law-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10px; color: var(--text-muted);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 10px; margin-top: 2px;
+    }
+    .law-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .tabs {
+      display: flex; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px; gap: 4px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 10px 12px; font-size: 12px; font-weight: 600;
+      color: var(--text-muted); border-bottom: 2px solid transparent;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .main { padding: 16px; max-width: 680px; margin: 0 auto; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+    }
+
+    /* セクション区切り */
+    .section-divider {
+      display: flex; align-items: center; gap: 10px; margin: 16px 0 12px;
+    }
+    .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .section-divider-label {
+      font-size: 11px; font-weight: 800; color: var(--accent);
+      letter-spacing: 0.06em; white-space: nowrap;
+    }
+
+    /* 基準日グリッド */
+    .law-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .law-info-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px;
+    }
+    .law-info-item .lbl {
+      font-size: 10px; color: var(--text-muted); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;
+    }
+    .law-info-item .val { font-size: 12px; font-weight: 700; color: var(--text); }
+    .law-info-item .val.warning { color: var(--accent); }
+
+    /* 改正履歴 */
+    .revision-list { list-style: none; }
+    .revision-list li {
+      display: flex; gap: 10px; padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px; line-height: 1.5;
+    }
+    .revision-list li:last-child { border-bottom: none; }
+    .revision-date { color: var(--accent); font-weight: 700; white-space: nowrap; min-width: 90px; }
+    .revision-desc { color: var(--text-muted); }
+
+    /* フォーム */
+    label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--text-muted); margin-bottom: 6px; margin-top: 12px;
+    }
+    label:first-of-type { margin-top: 0; }
+    input[type="text"], textarea, select {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-size: 14px;
+      font-family: inherit; padding: 10px 12px; outline: none;
+      transition: border-color 0.2s; -webkit-appearance: none;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 72px; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px;
+    }
+
+    /* ボタン */
+    .btn {
+      width: 100%; padding: 13px; border-radius: 8px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      border: none; transition: all 0.2s; letter-spacing: 0.02em;
+    }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-primary:active { background: var(--accent2); transform: scale(0.98); }
+    .btn-outline {
+      background: transparent; color: var(--blue);
+      border: 1px solid var(--blue); margin-top: 8px;
+    }
+    .btn-outline:active { background: rgba(88,166,255,0.1); }
+    @media (prefers-color-scheme: light) {
+      .btn-primary { color: #fff; }
+    }
+
+    /* プロンプト出力 */
+    .prompt-box { display: none; margin-top: 12px; }
+    .prompt-box.show { display: block; }
+    .prompt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .prompt-label {
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .copy-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+    .prompt-text {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; font-size: 12px; line-height: 1.6;
+      color: var(--text); white-space: pre-wrap; word-break: break-word;
+      max-height: 220px; overflow-y: auto;
+    }
+
+    /* 注意バナー */
+    .notice {
+      background: rgba(230,168,23,0.08); border: 1px solid rgba(230,168,23,0.3);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;
+    }
+    .notice strong { color: var(--accent); }
+
+    /* 補足メモ */
+    .sub-note {
+      font-size: 11px; color: var(--text-muted);
+      background: var(--bg); border-radius: 6px;
+      padding: 8px; margin-top: 8px; line-height: 1.6;
+    }
+
+    /* 使い方ステップ */
+    .step-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--accent); color: #000;
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="header-icon">🛃</div>
+    <div><h1>輸出入法令適合確認ツール</h1></div>
+  </div>
+  <div class="law-badge">
+    <span class="dot"></span>
+    最終確認：輸出管理令・外為法 R8.2.14 ／ 関税定率法 R8.4.1
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('inquiry')">📋 輸出管理令</div>
+  <div class="tab" onclick="switchTab('gaiatsu')">🌐 外為法</div>
+  <div class="tab" onclick="switchTab('customs')">📦 関税法</div>
+  <div class="tab" onclick="switchTab('food')">🍱 食品衛生法</div>
+  <div class="tab" onclick="switchTab('plant')">🌿 植物防疫法</div>
+  <div class="tab" onclick="switchTab('chem')">⚗️ 化審法・化管法</div>
+  <div class="tab" onclick="switchTab('animal')">🐄 家畜伝染病</div>
+  <div class="tab" onclick="switchTab('howto')">❓ 使い方</div>
+</div>
+
+<div class="main">
+
+<!-- ══════════ パネル①：輸出貿易管理令 ══════════ -->
+<div id="panel-inquiry" class="panel active">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">輸出貿易管理令</div></div>
+      <div class="law-info-item"><div class="lbl">原令公布</div><div class="val">昭和24年政令第378号</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和8年2月14日施行</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の改正履歴</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R8.2.14施行</span><span class="revision-desc">国際輸出管理レジーム会合の合意に基づく規制対象貨物の見直し（省令・通達）</span></li>
+      <li><span class="revision-date">R8.1.30施行</span><span class="revision-desc">輸出貿易管理令の運用について等の通達一部改正</span></li>
+      <li><span class="revision-date">R8.1.14施行</span><span class="revision-desc">技術管理強化のための官民対話スキームに係る対象技術の追加（告示）</span></li>
+      <li><span class="revision-date">R7.11.15施行</span><span class="revision-desc">噴霧乾燥器の規制見直し・プログラム記録媒体の特例化・一時的武器持ち出しの特例化</span></li>
+      <li><span class="revision-date">R7.10.9施行</span><span class="revision-desc">補完的輸出規制の見直し</span></li>
+      <li><span class="revision-date">R7.5.28施行</span><span class="revision-desc">工作機械に対する輸出管理の見直し</span></li>
+    </ul>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 項番調査プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">貨物・役務の情報入力</div>
+    <label>品名・製品名</label>
+    <input type="text" id="item-name" placeholder="例：赤外線カメラモジュール" />
+    <label>用途・最終需要者</label>
+    <textarea id="item-use" placeholder="例：工場設備の温度監視用途。納入先は国内メーカー。"></textarea>
+    <label>仕向国</label>
+    <input type="text" id="dest-country" placeholder="例：中国、インド、ドイツ" />
+    <label>調査種別</label>
+    <select id="inquiry-type">
+      <option value="both">貨物・役務（両方）</option>
+      <option value="cargo">貨物のみ</option>
+      <option value="service">役務（技術）のみ</option>
+    </select>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateInquiryPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="inquiry-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-inquiry" onclick="copyPrompt('inquiry')">コピー</button>
+      </div>
+      <div class="prompt-text" id="inquiry-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">令和8年2月14日以降の改正有無を経産省HPで調査するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('inquiry')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-inquiry-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-inquiry" onclick="copyPrompt('revision-inquiry')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-inquiry-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル②：外為法 ══════════ -->
+<div id="panel-gaiatsu" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">外国為替及び外国貿易法・外国為替令</div></div>
+      <div class="law-info-item"><div class="lbl">原令公布</div><div class="val">昭和24年法律第228号</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和8年2月14日施行</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の改正履歴</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R8.2.14施行</span><span class="revision-desc">外為令別表の規制対象貨物・技術の見直し（輸出令と同時改正）</span></li>
+      <li><span class="revision-date">R8.1.30施行</span><span class="revision-desc">役務通達・包括許可取扱要領の一部改正</span></li>
+      <li><span class="revision-date">R7.10.9施行</span><span class="revision-desc">キャッチオール規制の大幅見直し。HSコードによる特定貨物の指定、一般国向け輸出への需要者要件確認義務化</span></li>
+      <li><span class="revision-date">R7.5.28施行</span><span class="revision-desc">重要・新興品目の外為令別表への追加、特定包括許可取得要件の緩和</span></li>
+      <li><span class="revision-date">R7.2.5施行</span><span class="revision-desc">外国ユーザーリスト改正（748社・組織に拡大。中国・イラン・ロシア等の増加が顕著）</span></li>
+    </ul>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 該非判定プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">貨物・技術の情報入力</div>
+    <label>品名・製品名 / 技術名</label>
+    <input type="text" id="gaiatsu-item" placeholder="例：暗号化通信モジュール、ドローン制御技術" />
+    <label>用途・提供先</label>
+    <textarea id="gaiatsu-use" placeholder="例：民生用通信機器への組み込み。提供先は米国企業。"></textarea>
+    <label>仕向国 / 技術提供先国</label>
+    <input type="text" id="gaiatsu-dest" placeholder="例：中国、UAE、インド" />
+    <label>取引種別</label>
+    <select id="gaiatsu-type">
+      <option value="cargo">貨物輸出（外為令別表）</option>
+      <option value="service">役務取引・技術提供（第25条）</option>
+      <option value="both">両方確認</option>
+      <option value="catchall">キャッチオール規制のみ確認</option>
+    </select>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateGaiatsuPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="gaiatsu-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-gaiatsu" onclick="copyPrompt('gaiatsu')">コピー</button>
+      </div>
+      <div class="prompt-text" id="gaiatsu-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">令和8年2月14日以降の改正有無を経産省HPで調査するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('gaiatsu')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-gaiatsu-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-gaiatsu" onclick="copyPrompt('revision-gaiatsu')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-gaiatsu-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル③：関税法・関税定率法 ══════════ -->
+<div id="panel-customs" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず税関または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">関税法・関税定率法・関税暫定措置法</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">財務省・税関</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和8年4月1日施行</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の改正履歴</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R8.4.1施行</span><span class="revision-desc">関税定率法等の一部を改正する法律（令和8年法律第5号）：保税制度の抜本的強化・AD関税迂回防止制度の創設・加工再輸入減税制度の3年延長（R11.3.31まで）・航空機部分品等輸入免税制度の3年延長</span></li>
+      <li><span class="revision-date">R8.6.1施行</span><span class="revision-desc">同法の段階施行：保税業者への保税業務規則策定義務・搬出確認義務の導入</span></li>
+      <li><span class="revision-date">R8.4.1施行</span><span class="revision-desc">令和8年政令第85・86号：関係政令の整備・特定国原産物品への関税政令改正</span></li>
+      <li><span class="revision-date">R7.4.1施行</span><span class="revision-desc">関税定率法等の一部を改正する法律（令和7年法律第16号）：関税率表改正・特恵関税制度の見直し</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>令和8年改正は施行日が4段階（R8.4.1・R8.6.1・R9.10.1・R10.4.1）に分かれています。特に保税制度改正はR8.6.1施行です。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 関税確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">貨物・品目の情報入力</div>
+    <label>品名・品目</label>
+    <input type="text" id="customs-item" placeholder="例：冷凍牛肉、半導体製造装置、医薬品原料" />
+    <label>原産国・仕出国</label>
+    <input type="text" id="customs-origin" placeholder="例：オーストラリア、中国、インド" />
+    <label>取引概要・用途</label>
+    <textarea id="customs-use" placeholder="例：国内加工向け輸入。FOB条件。仕入書価格100万円。"></textarea>
+    <label>確認項目</label>
+    <select id="customs-type">
+      <option value="rate">関税率・適用税率の確認</option>
+      <option value="relief">関税減免・戻し税制度の確認</option>
+      <option value="bonded">保税制度・蔵置場手続きの確認</option>
+      <option value="origin">原産地規則・特恵関税の確認</option>
+      <option value="all">総合確認（上記すべて）</option>
+    </select>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateCustomsPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="customs-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-customs" onclick="copyPrompt('customs')">コピー</button>
+      </div>
+      <div class="prompt-text" id="customs-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">令和8年4月1日以降の改正有無を税関HPで調査するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('customs')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-customs-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-customs" onclick="copyPrompt('revision-customs')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-customs-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル④：食品衛生法 ══════════ -->
+<div id="panel-food" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず厚生労働省検疫所または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">食品衛生法・食品安全基本法</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">厚生労働省・消費者庁</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和7年度監視指導計画</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の改正・運用情報</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R7年度</span><span class="revision-desc">令和7年度輸入食品監視指導計画を策定・公表。検査命令・モニタリング検査の対象品目・強化国を更新</span></li>
+      <li><span class="revision-date">R5.6施行</span><span class="revision-desc">食品衛生法施行規則の一部改正：食品等のリコール（自主回収）情報の行政への報告義務化</span></li>
+      <li><span class="revision-date">R3.6施行</span><span class="revision-desc">営業許可制度の見直し・営業届出制度の創設（34種→32種に再編）</span></li>
+      <li><span class="revision-date">R2.6施行</span><span class="revision-desc">HACCPに沿った衛生管理の制度化（全食品等事業者に義務化）</span></li>
+      <li><span class="revision-date">随時更新</span><span class="revision-desc">検査命令対象品目・国の追加・解除（違反事例に基づき随時）。厚労省HPで最新情報を確認</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>食品衛生法の法改正は比較的少ないが、<strong style="color:var(--accent)">検査命令・モニタリング強化品目は随時更新</strong>されます。輸入前に必ず厚労省HPの最新情報を確認してください。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 輸入適合確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">食品等の情報入力</div>
+    <label>品名・食品名</label>
+    <input type="text" id="food-item" placeholder="例：冷凍エビ、農薬残留基準確認用野菜、食品添加物" />
+    <label>原産国・製造国</label>
+    <input type="text" id="food-origin" placeholder="例：タイ、中国、ベトナム" />
+    <label>品目の種類</label>
+    <select id="food-type">
+      <option value="food">食品・飲料</option>
+      <option value="additive">食品添加物</option>
+      <option value="container">器具・容器包装</option>
+      <option value="meat">食肉・食肉製品</option>
+      <option value="fish">水産物・水産加工品</option>
+      <option value="other">その他（乳幼児用品等）</option>
+    </select>
+    <label>確認したい事項</label>
+    <textarea id="food-concern" placeholder="例：残留農薬基準、添加物使用基準、検査命令の有無、衛生証明書の要否"></textarea>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateFoodPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="food-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-food" onclick="copyPrompt('food')">コピー</button>
+      </div>
+      <div class="prompt-text" id="food-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正・検査命令確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">最新の検査命令対象品目・モニタリング強化情報を厚労省HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('food')">確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-food-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-food" onclick="copyPrompt('revision-food')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-food-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑤：植物防疫法 ══════════ -->
+<div id="panel-plant" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず農林水産省植物防疫所または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">植物防疫法・植物防疫法施行規則</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">農林水産省植物防疫所</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和7年6月告示改正</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の主な改正履歴</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R7.6告示改正</span><span class="revision-desc">輸入植物検疫規程別表の一部改正（農林水産省告示第989号）：検疫有害動植物の対象見直し</span></li>
+      <li><span class="revision-date">R7.3〜4</span><span class="revision-desc">植物防疫法施行規則別表一の有害動植物（農林水産大臣指定）の一部改正パブコメ実施</span></li>
+      <li><span class="revision-date">R6.11施行</span><span class="revision-desc">植物防疫法施行規則の一部改正（令和6年農林水産省令第57号）</span></li>
+      <li><span class="revision-date">R5.8.5施行</span><span class="revision-desc">検査証明書の添付が必要な植物の拡大：穀類（コメ・ムギ・トウモロコシ等）、飼料・肥料・農林業用生産資材（ピートモス・ココピート等）が新たに対象化</span></li>
+      <li><span class="revision-date">R5.4.1施行</span><span class="revision-desc">植物防疫法の大改正（令和4年法改正）施行：侵入雑草・種子を有害植物として正式定義、中古農業機械を検疫指定物品に追加</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>R5年の改正により<strong style="color:var(--accent)">穀類・飼料・肥料・培養資材等に検査証明書が必要</strong>になりました。輸入条件は品目・原産国・部位・加工度により異なります。必ず植物防疫所のデータベースで確認してください。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 輸入検疫確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">植物等の情報入力</div>
+    <label>植物名・品目名</label>
+    <input type="text" id="plant-item" placeholder="例：大豆、切り花（バラ）、ピートモス、中古農業機械" />
+    <label>原産国・発送国</label>
+    <input type="text" id="plant-origin" placeholder="例：アメリカ、オランダ、カナダ" />
+    <label>品目の種類</label>
+    <select id="plant-type">
+      <option value="grain">穀類・豆類</option>
+      <option value="fresh">生鮮植物（切花・果実・野菜）</option>
+      <option value="seed">種子・球根・苗</option>
+      <option value="feed">飼料・肥料・農林業用生産資材</option>
+      <option value="wood">木材・木材こん包材</option>
+      <option value="machine">中古農業機械</option>
+      <option value="other">その他加工植物製品</option>
+    </select>
+    <label>確認したい事項</label>
+    <textarea id="plant-concern" placeholder="例：検査証明書の要否、輸入禁止品の該当確認、検疫指定物品への該当"></textarea>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generatePlantPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="plant-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-plant" onclick="copyPrompt('plant')">コピー</button>
+      </div>
+      <div class="prompt-text" id="plant-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">令和7年6月以降の告示改正・施行規則改正有無を農水省HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('plant')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-plant-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-plant" onclick="copyPrompt('revision-plant')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-plant-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑥：化審法・化管法 ══════════ -->
+<div id="panel-chem" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省・厚生労働省・環境省または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令①</div><div class="val">化審法（化学物質の審査及び製造等の規制に関する法律）</div></div>
+      <div class="law-info-item"><div class="lbl">参照法令②</div><div class="val">化管法（特定化学物質の環境への排出量の把握等及び管理の改善の促進に関する法律）</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">経済産業省・厚生労働省・環境省（3省共管）</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">化審法 最新確認</div><div class="val warning">令和7年度 優先評価結果公表（R8.3.31）</div></div>
+      <div class="law-info-item"><div class="lbl">化管法 最新確認</div><div class="val warning">R5.4.1施行 対象物質改正済</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の主な改正・運用情報</div>
+    <div class="revision-group-label" style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;">▼ 化審法</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R8.3.31公表</span><span class="revision-desc">令和7年度 優先評価化学物質のリスク評価（一次）評価Ⅰの結果公表。今後の規制強化対象物質の動向に注意</span></li>
+      <li><span class="revision-date">R7.12閣議決定</span><span class="revision-desc">化審法施行令の一部を改正する政令：PFHxS（ペルフルオロヘキサンスルホン酸関連物質）を第一種特定化学物質に指定。当該物質使用製品の輸入禁止対象を追加</span></li>
+      <li><span class="revision-date">R6.7閣議決定</span><span class="revision-desc">化審法施行令改正：PFOAの異性体・ペルフルオロオクタン酸関連物質を第一種特定化学物質に指定。はつ水・はつ油処理生地等の輸入禁止</span></li>
+      <li><span class="revision-date">随時更新</span><span class="revision-desc">新規化学物質の公示（年4回程度）・優先評価化学物質のリスク評価結果。経産省HPで最新情報を確認</span></li>
+    </ul>
+    <div class="revision-group-label" style="font-size:11px;font-weight:700;color:var(--accent);margin:12px 0 6px;">▼ 化管法（PRTR法）</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R5.4.1施行</span><span class="revision-desc">化管法施行令の改正：第一種指定化学物質 462→515物質、第二種指定化学物質 100→134物質に拡大。R6年度届出（R5年度把握分）より適用</span></li>
+      <li><span class="revision-date">R4.3.31公布</span><span class="revision-desc">化管法省令改正：SDS（安全データシート）の提供方法の見直し</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>化審法の<strong style="color:var(--accent)">第一種特定化学物質を含む製品の輸入は原則禁止</strong>です。PFASを含む製品（はつ水加工品等）の輸入時は特に注意が必要です。新規化学物質の輸入は事前届出または確認が必要です。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 化学物質規制確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">化学物質・製品の情報入力</div>
+    <label>化学物質名・製品名</label>
+    <input type="text" id="chem-item" placeholder="例：PFAS含有はつ水加工品、新規化学物質X、塗料用溶剤" />
+    <label>CAS番号（わかれば）</label>
+    <input type="text" id="chem-cas" placeholder="例：335-67-1（PFOAのCAS番号）" />
+    <label>用途・取引内容</label>
+    <textarea id="chem-use" placeholder="例：工業用洗浄剤として輸入。年間取扱量50トン予定。"></textarea>
+    <label>確認項目</label>
+    <select id="chem-type">
+      <option value="kasin">化審法：新規化学物質の届出要否</option>
+      <option value="kasin-toku">化審法：特定化学物質・輸入禁止品の確認</option>
+      <option value="kakan">化管法：PRTR届出・SDS交付義務の確認</option>
+      <option value="both">化審法・化管法 両方確認</option>
+    </select>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateChemPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="chem-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-chem" onclick="copyPrompt('chem')">コピー</button>
+      </div>
+      <div class="prompt-text" id="chem-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">最新の第一種特定化学物質の追加・優先評価結果を経産省HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('chem')">改正確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-chem-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">改正確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-chem" onclick="copyPrompt('revision-chem')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-chem-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑦：家畜伝染病予防法 ══════════ -->
+<div id="panel-animal" class="panel">
+  <div class="notice"><strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず農林水産省動物検疫所または専門家にご確認ください。</div>
+
+  <div class="card">
+    <div class="card-title">⚖ 参照法令の基準日</div>
+    <div class="law-info-grid">
+      <div class="law-info-item"><div class="lbl">参照法令</div><div class="val">家畜伝染病予防法・施行規則</div></div>
+      <div class="law-info-item"><div class="lbl">所管官庁</div><div class="val">農林水産省・動物検疫所</div></div>
+      <div class="law-info-item"><div class="lbl">AIの学習基準</div><div class="val warning">〜令和7年11月頃</div></div>
+      <div class="law-info-item"><div class="lbl">最新確認済改正</div><div class="val warning">令和7年11月20日時点（三段表）</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 直近の主な改正・運用情報</div>
+    <ul class="revision-list">
+      <li><span class="revision-date">R7.12.25告示</span><span class="revision-desc">鶏等の飼養衛生管理基準の項7における農林水産大臣が指定する地域の指定（告示第1969号）：高病原性鳥インフルエンザの発生リスク高地域の指定</span></li>
+      <li><span class="revision-date">R7.10.1変更</span><span class="revision-desc">高病原性鳥インフルエンザ及び低病原性鳥インフルエンザに関する特定家畜伝染病防疫指針の一部変更</span></li>
+      <li><span class="revision-date">R7.4.18</span><span class="revision-desc">農林水産省が家畜伝染病対策の強化の方向性を表明。鳥インフルエンザ・豚熱・アフリカ豚熱への対応強化を指示</span></li>
+      <li><span class="revision-date">R7.3.7改正</span><span class="revision-desc">家畜伝染病予防法に基づく焼却・埋却及び消毒の方法に関する留意事項の一部改正（施行規則第30条・第33条の3関係）</span></li>
+      <li><span class="revision-date">随時更新</span><span class="revision-desc">輸入停止措置・輸入禁止国・地域の指定は口蹄疫・鳥インフルエンザ等の発生状況に応じて随時更新。動物検疫所HPで最新情報を確認</span></li>
+    </ul>
+    <div class="sub-note">⚠ <strong style="color:var(--accent)">実務上の注意：</strong>家畜伝染病は<strong style="color:var(--accent)">輸入禁止国・地域が発生状況に応じて随時変更</strong>されます。輸入前に必ず動物検疫所HPの最新情報を確認してください。特に鳥インフルエンザ・口蹄疫・豚熱の発生状況は頻繁に変動します。</div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">① 輸入検疫確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">動物・畜産物の情報入力</div>
+    <label>品名・動物・畜産物名</label>
+    <input type="text" id="animal-item" placeholder="例：生牛肉、豚肉製品、生きた家禽、乳製品、皮革" />
+    <label>原産国・発送国</label>
+    <input type="text" id="animal-origin" placeholder="例：アメリカ、オーストラリア、タイ" />
+    <label>品目の種類</label>
+    <select id="animal-type">
+      <option value="live">生きた動物（偶蹄類・馬・家禽・犬等）</option>
+      <option value="meat">食肉・食肉製品（ソーセージ・ハム・ベーコン含む）</option>
+      <option value="dairy">乳・乳製品・卵</option>
+      <option value="byproduct">骨・皮・羽・精液・受精卵等の副産物</option>
+      <option value="feed">骨粉・肉骨粉・飼料用畜産物</option>
+      <option value="straw">わら・乾草（飼料用）</option>
+    </select>
+    <label>確認したい事項</label>
+    <textarea id="animal-concern" placeholder="例：輸入禁止国に該当するか、検査証明書の要否、輸入検疫の手続き"></textarea>
+    <button class="btn btn-primary" style="margin-top:14px;" onclick="generateAnimalPrompt()">プロンプトを生成する</button>
+    <div class="prompt-box" id="animal-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-animal" onclick="copyPrompt('animal')">コピー</button>
+      </div>
+      <div class="prompt-text" id="animal-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">② 輸入禁止国・改正確認プロンプト</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">最新の輸入禁止国・地域の指定状況を動物検疫所HPで確認するプロンプトを生成します。</p>
+    <button class="btn btn-primary" onclick="generateRevisionPrompt('animal')">確認プロンプトを生成</button>
+    <div class="prompt-box" id="revision-animal-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">確認プロンプト</span>
+        <button class="copy-btn" id="copy-btn-revision-animal" onclick="copyPrompt('revision-animal')">コピー</button>
+      </div>
+      <div class="prompt-text" id="revision-animal-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ パネル⑧：使い方 ══════════ -->
+<div id="panel-howto" class="panel">
+  <div class="card">
+    <div class="card-title">📋 各タブ共通の使い方</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text">法令タブを選択し、参照法令の基準日と直近の改正履歴を確認する</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text">「① プロンプト」で品名・用途・仕向国を入力して「プロンプトを生成する」をタップ</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">「コピー」→「Claude.aiで開く」をタップして貼り付け送信。AIが確認事項と根拠条文を回答</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text">AIの回答に「参照法令：令和〇年〇月〇日施行」が明記されているか確認する</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-text">「② 改正確認プロンプト」で月1回程度、各省庁HPの最新改正情報を定期確認する</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠ 重要な注意点</div>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.8;">
+      ・AIの回答はあくまで<strong style="color:var(--accent)">参考情報</strong>です。<br>
+      ・最終的な該非判定・関税分類の責任は通関業者・輸出入者が負います。<br>
+      ・グレーゾーン案件は必ず経済産業省・税関へ照会してください。<br>
+      ・AIの知識は令和7年11月頃までが基準です。<br>
+      ・「② 改正確認プロンプト」で定期的に最新情報を確認することを推奨します。
+    </p>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+  function switchTab(id) {
+    const ids = ['inquiry','gaiatsu','customs','food','plant','chem','animal','howto'];
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ids[i] === id));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    // タブ切替時にすべてのプロンプトボックスを非表示にリセット
+    document.querySelectorAll('.prompt-box').forEach(b => b.classList.remove('show'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function generateInquiryPrompt() {
+    const name = document.getElementById('item-name').value.trim();
+    const use  = document.getElementById('item-use').value.trim();
+    const dest = document.getElementById('dest-country').value.trim();
+    const type = document.getElementById('inquiry-type').value;
+    if (!name) { alert('品名・製品名を入力してください'); return; }
+    const typeLabel = {both:'貨物・役務（両方）', cargo:'貨物', service:'役務（技術）'}[type];
+    showPrompt('inquiry',
+`【輸出貿易管理令 項番調査依頼】
+
+▼ 調査対象：${typeLabel}
+▼ 品名・製品名：${name}
+▼ 用途・最終需要者：${use || '（未入力）'}
+▼ 仕向国：${dest || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した輸出貿易管理令の施行年月日を最初に明記してください。
+   例：「参照法令：輸出貿易管理令（令和〇年〇月〇日施行版）」
+
+2. 別表第一の該当項番候補を3〜5件提示してください。
+   各候補について：項番・該当理由・非該当の可能性がある場合はその根拠も記載
+
+3. 補完的輸出規制（キャッチオール規制）の観点から懸念がある場合は明記してください。
+
+4. 確認を推奨する関係省令・告示があれば併記してください。
+
+5. 最後に「この回答は参考情報であり、最終的な該非判定は経済産業省または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generateGaiatsuPrompt() {
+    const item = document.getElementById('gaiatsu-item').value.trim();
+    const use  = document.getElementById('gaiatsu-use').value.trim();
+    const dest = document.getElementById('gaiatsu-dest').value.trim();
+    const type = document.getElementById('gaiatsu-type').value;
+    if (!item) { alert('品名・製品名または技術名を入力してください'); return; }
+    const typeLabel = {cargo:'貨物輸出（外為令別表）', service:'役務取引・技術提供（第25条）', both:'貨物輸出・役務取引（両方）', catchall:'キャッチオール規制'}[type];
+    showPrompt('gaiatsu',
+`【外為法 該非判定依頼】
+
+▼ 調査対象：${typeLabel}
+▼ 品名・技術名：${item}
+▼ 用途・提供先：${use || '（未入力）'}
+▼ 仕向国・提供先国：${dest || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した外国為替令の施行年月日を最初に明記してください。
+   例：「参照法令：外国為替令（令和〇年〇月〇日施行版）」
+
+2. 外為令別表への該当可能性を判定してください。
+   ・該当する可能性がある項番と該当理由
+   ・非該当の可能性とその根拠
+
+3. 役務取引・技術提供（外為法第25条）の観点から許可が必要になる可能性を判定してください。
+
+4. キャッチオール規制（令和7年10月9日施行の改正後）の観点から確認が必要な事項を明記してください。
+   ・特定貨物（HSコード指定）への該当可能性
+   ・需要者要件・用途要件の確認必要性
+
+5. 外国ユーザーリストへの掲載確認が必要な場合は指摘してください。
+
+6. 最後に「この回答は参考情報であり、最終的な該非判定は経済産業省または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generateCustomsPrompt() {
+    const item   = document.getElementById('customs-item').value.trim();
+    const origin = document.getElementById('customs-origin').value.trim();
+    const use    = document.getElementById('customs-use').value.trim();
+    const type   = document.getElementById('customs-type').value;
+    if (!item) { alert('品名・品目を入力してください'); return; }
+    const typeLabel = {rate:'関税率・適用税率の確認', relief:'関税減免・戻し税制度の確認', bonded:'保税制度・蔵置場手続きの確認', origin:'原産地規則・特恵関税の確認', all:'総合確認'}[type];
+    showPrompt('customs',
+`【関税法・関税定率法 確認依頼】
+
+▼ 確認項目：${typeLabel}
+▼ 品名・品目：${item}
+▼ 原産国・仕出国：${origin || '（未入力）'}
+▼ 取引概要・用途：${use || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した関税法・関税定率法の施行年月日を最初に明記してください。
+   例：「参照法令：関税定率法（令和〇年〇月〇日施行版）」
+
+2. 【令和8年改正の影響確認】
+   令和8年4月1日・6月1日施行の改正（令和8年法律第5号）が本件に影響するか確認してください。
+   ・保税制度改正（R8.6.1施行）の影響の有無
+   ・AD関税迂回防止制度の対象となる可能性の有無
+   ・加工再輸入減税制度（R11.3.31まで延長）の適用可能性
+
+3. 【関税率・適用税率】
+   ・基本税率・暫定税率・協定税率（WTO）の別
+   ・EPA/FTA適用税率（原産国に応じた適用可能な協定）
+   ・特恵関税の適用可能性
+
+4. 【原産地規則】
+   ・適用するEPA/FTAの原産地規則の概要
+   ・必要な原産地証明書の種類
+
+5. 【関税減免・戻し税】
+   本件に適用可能な減免税制度があれば具体的に提示してください。
+
+6. 最後に「この回答は参考情報であり、最終的な判断は税関または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generateRevisionPrompt(law) {
+    const configs = {
+      inquiry: {
+        name: '輸出貿易管理令（昭和24年政令第378号）',
+        lastDate: '令和8年2月14日施行',
+        url: 'https://www.meti.go.jp/policy/anpo/law09-2.html',
+        ministry: '経済産業省 安全保障貿易管理ページ'
+      },
+      gaiatsu: {
+        name: '外国為替及び外国貿易法・外国為替令（昭和24年法律第228号）',
+        lastDate: '令和8年2月14日施行',
+        url: 'https://www.meti.go.jp/policy/anpo/law09-2.html',
+        ministry: '経済産業省 安全保障貿易管理ページ'
+      },
+      customs: {
+        name: '関税法・関税定率法・関税暫定措置法',
+        lastDate: '令和8年4月1日施行',
+        url: 'https://www.customs.go.jp/kaisei/hourei.htm',
+        ministry: '税関 所管法令等一覧ページ'
+      },
+      food: {
+        name: '食品衛生法（昭和22年法律第233号）',
+        lastDate: '令和7年度監視指導計画・最新検査命令情報',
+        url: 'https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/shokuhin/yunyu_kanshi/index.html',
+        ministry: '厚生労働省 輸入食品監視業務ページ'
+      },
+      plant: {
+        name: '植物防疫法（昭和25年法律第151号）・施行規則',
+        lastDate: '令和7年6月告示改正（農林水産省告示第989号）',
+        url: 'https://www.maff.go.jp/pps/j/law/index.html',
+        ministry: '農林水産省植物防疫所 法令・通達ページ'
+      },
+      chem: {
+        name: '化審法（昭和48年法律第117号）・化管法（平成11年法律第86号）',
+        lastDate: '令和7年12月閣議決定（PFHxS第一種特定化学物質指定）',
+        url: 'https://www.meti.go.jp/policy/chemical_management/kasinhou/index.html',
+        ministry: '経済産業省 化学物質管理ページ'
+      },
+      animal: {
+        name: '家畜伝染病予防法（昭和26年法律第166号）・施行規則',
+        lastDate: '令和7年12月25日告示（鶏等飼養衛生管理基準 大臣指定地域）',
+        url: 'https://www.maff.go.jp/aqs/animal/importcondition/index.html',
+        ministry: '農林水産省動物検疫所 輸入条件ページ'
+      }
+    };
+    const c = configs[law];
+    showPrompt('revision-' + law,
+`【改正確認依頼】
+
+▼ 調査対象法令：${c.name}
+▼ 確認済み最終改正：${c.lastDate}
+▼ 調査対象：${c.lastDate}以降に公布・施行された改正の有無
+
+【調査手順】
+1. ${c.ministry}（${c.url}）を確認する
+2. ${c.lastDate}より後の日付で記載された改正情報があるか確認する
+3. 改正がある場合：施行日・改正内容の概要・影響する規制品目を箇条書きで報告する
+4. 改正がない場合：「${c.lastDate}以降の改正は確認されませんでした」と明記する
+
+【出力形式】
+・確認日時（本日の日付）
+・確認先URL
+・改正有無の結論
+・改正がある場合の詳細リスト
+・注意すべき品目・手続きカテゴリがあれば追記`);
+  }
+
+  function showPrompt(id, text) {
+    document.getElementById(id + '-prompt-text').textContent = text;
+    const box = document.getElementById(id + '-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function copyPrompt(id) {
+    const text = document.getElementById(id + '-prompt-text').textContent;
+    const btn  = document.getElementById('copy-btn-' + id);
+    const done = () => {
+      btn.textContent = '✓ コピー済'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(done).catch(() => { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  }
+
+  function generateFoodPrompt() {
+    const item    = document.getElementById('food-item').value.trim();
+    const origin  = document.getElementById('food-origin').value.trim();
+    const type    = document.getElementById('food-type').value;
+    const concern = document.getElementById('food-concern').value.trim();
+    if (!item) { alert('品名・食品名を入力してください'); return; }
+    const typeLabel = {food:'食品・飲料', additive:'食品添加物', container:'器具・容器包装', meat:'食肉・食肉製品', fish:'水産物・水産加工品', other:'その他'}[type];
+    showPrompt('food',
+`【食品衛生法 輸入適合確認依頼】
+
+▼ 品名：${item}
+▼ 原産国・製造国：${origin || '（未入力）'}
+▼ 品目の種類：${typeLabel}
+▼ 確認事項：${concern || '総合確認'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した食品衛生法の施行年月日を最初に明記してください。
+   例：「参照法令：食品衛生法（令和〇年〇月〇日施行版）」
+
+2. 【輸入届出の要否】
+   食品衛生法第27条に基づく食品等輸入届出の要否を確認してください。
+   届出不要品目（原塩・コプラ・粗糖・粗留アルコール等）に該当するか確認してください。
+
+3. 【規格基準・成分規格の確認】
+   ・食品、添加物等の規格基準（厚生省告示第370号）への適合確認事項
+   ・残留農薬基準（ポジティブリスト制度）の確認が必要な場合は明記
+   ・添加物の使用基準・製造基準の確認が必要な場合は明記
+
+4. 【検査命令・モニタリング検査】
+   ・現在、当該品目・原産国の組み合わせで検査命令が発令されている可能性を確認
+   ・モニタリング検査強化対象となっている可能性を確認
+   ※最新情報は厚生労働省HPで必ず確認が必要な旨を付記してください
+
+5. 【衛生証明書・必要書類】
+   衛生証明書が必要な品目（食肉・食肉製品・生食用かき・ふぐ等）に該当するか確認してください。
+
+6. 最後に「この回答は参考情報であり、最終的な判断は厚生労働省検疫所または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generatePlantPrompt() {
+    const item    = document.getElementById('plant-item').value.trim();
+    const origin  = document.getElementById('plant-origin').value.trim();
+    const type    = document.getElementById('plant-type').value;
+    const concern = document.getElementById('plant-concern').value.trim();
+    if (!item) { alert('植物名・品目名を入力してください'); return; }
+    const typeLabel = {grain:'穀類・豆類', fresh:'生鮮植物（切花・果実・野菜）', seed:'種子・球根・苗', feed:'飼料・肥料・農林業用生産資材', wood:'木材・木材こん包材', machine:'中古農業機械', other:'その他加工植物製品'}[type];
+    showPrompt('plant',
+`【植物防疫法 輸入検疫確認依頼】
+
+▼ 植物名・品目名：${item}
+▼ 原産国・発送国：${origin || '（未入力）'}
+▼ 品目の種類：${typeLabel}
+▼ 確認事項：${concern || '総合確認'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した植物防疫法・施行規則の施行年月日を最初に明記してください。
+   例：「参照法令：植物防疫法施行規則（令和〇年〇月〇日施行版）」
+
+2. 【輸入禁止品の確認】
+   植物防疫法第7条の輸入禁止品に該当するか確認してください。
+   ・禁止地域（発送国・経由国）からの輸入制限の有無
+   ・禁止植物・禁止物品への該当可能性
+
+3. 【検査証明書の要否】
+   ・輸出国政府機関発行の検査証明書（フィトサニタリー）の添付が必要か確認
+   ・令和5年8月5日施行の改正により新たに対象となった品目（穀類・飼料・肥料・培養資材等）に該当するか確認
+   ・栽培地検査証明書が必要な品目・地域に該当するか確認
+
+4. 【輸入検疫の手続き】
+   ・植物防疫所への届出・検査の手順
+   ・検疫指定物品（中古農業機械等）への該当確認
+   ・木材こん包材のISDM15号処理証明の要否
+
+5. 【輸入条件データベースの確認推奨】
+   農林水産省植物防疫所の輸入条件データベース（https://www.maff.go.jp/pps/）で最新の輸入条件を確認するよう促してください。
+
+6. 最後に「この回答は参考情報であり、最終的な判断は農林水産省植物防疫所または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generateChemPrompt() {
+    const item = document.getElementById('chem-item').value.trim();
+    const cas  = document.getElementById('chem-cas').value.trim();
+    const use  = document.getElementById('chem-use').value.trim();
+    const type = document.getElementById('chem-type').value;
+    if (!item) { alert('化学物質名・製品名を入力してください'); return; }
+    const typeLabel = {
+      kasin:'化審法：新規化学物質の届出要否',
+      'kasin-toku':'化審法：特定化学物質・輸入禁止品の確認',
+      kakan:'化管法：PRTR届出・SDS交付義務の確認',
+      both:'化審法・化管法 両方確認'
+    }[type];
+    showPrompt('chem',
+`【化審法・化管法 規制確認依頼】
+
+▼ 確認項目：${typeLabel}
+▼ 化学物質名・製品名：${item}
+▼ CAS番号：${cas || '（未入力）'}
+▼ 用途・取引内容：${use || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した化審法・化管法の施行年月日を最初に明記してください。
+   例：「参照法令：化審法施行令（令和〇年〇月〇日施行版）」
+
+2. 【化審法の確認】
+   ① 輸入禁止・規制の確認：
+      ・第一種特定化学物質（PFOS・PFOA・PFHxS等のPFAS含む）への該当可能性
+      ・当該物質を使用した政令指定製品（輸入禁止製品）への該当確認
+      ・令和7年12月閣議決定のPFHxS指定による影響の有無
+
+   ② 新規化学物質の届出要否：
+      ・既存化学物質リストへの収載の有無（既存物質か新規物質か）
+      ・新規の場合：年間1トン超→事前届出、1トン未満→少量新規の手続きの要否
+      ・優先評価化学物質・監視化学物質への該当可能性
+
+3. 【化管法の確認】
+   ・第一種指定化学物質（515物質）への該当可能性とPRTR届出義務の有無
+   ・第二種指定化学物質（134物質）への該当可能性
+   ・SDS（安全データシート）の交付義務の有無
+   ・年間取扱量が届出基準（1トン以上等）を超える場合の手続き
+
+4. 確認に利用できるデータベースを案内してください。
+   （NITE化学物質総合情報提供システムCHRIP等）
+
+5. 最後に「この回答は参考情報であり、最終的な判断は経済産業省・厚生労働省・環境省または専門家への確認が必要です」と付記してください。`);
+  }
+
+  function generateAnimalPrompt() {
+    const item    = document.getElementById('animal-item').value.trim();
+    const origin  = document.getElementById('animal-origin').value.trim();
+    const type    = document.getElementById('animal-type').value;
+    const concern = document.getElementById('animal-concern').value.trim();
+    if (!item) { alert('品名・動物・畜産物名を入力してください'); return; }
+    const typeLabel = {
+      live:'生きた動物（偶蹄類・馬・家禽・犬等）',
+      meat:'食肉・食肉製品',
+      dairy:'乳・乳製品・卵',
+      byproduct:'骨・皮・羽・精液・受精卵等の副産物',
+      feed:'骨粉・肉骨粉・飼料用畜産物',
+      straw:'わら・乾草（飼料用）'
+    }[type];
+    showPrompt('animal',
+`【家畜伝染病予防法 輸入検疫確認依頼】
+
+▼ 品名・動物・畜産物名：${item}
+▼ 原産国・発送国：${origin || '（未入力）'}
+▼ 品目の種類：${typeLabel}
+▼ 確認事項：${concern || '総合確認'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した家畜伝染病予防法・施行規則の施行年月日を最初に明記してください。
+   例：「参照法令：家畜伝染病予防法施行規則（令和〇年〇月〇日施行版）」
+
+2. 【指定検疫物への該当確認】
+   家畜伝染病予防法第36条の指定検疫物に該当するか確認してください。
+   ・偶蹄類の動物・馬・家禽・犬・兎・みつばち（死体含む）
+   ・食肉・食肉製品（ソーセージ・ハム・ベーコン含む）
+   ・骨・皮・羽・精液・受精卵・乳等の副産物
+   ・骨粉・肉骨粉・血粉等
+   ・わら・乾草（飼料用）
+
+3. 【輸入禁止・制限の確認】
+   ・原産国・発送国が輸入禁止・制限地域に該当するか確認してください
+   ・口蹄疫・高病原性鳥インフルエンザ・豚熱・アフリカ豚熱・BSE等の観点から確認
+   ・ただし輸入禁止国・地域は発生状況により随時変更されるため、動物検疫所HPの最新情報確認が必須であることを付記してください
+
+4. 【検査証明書・輸入手続きの確認】
+   ・輸出国政府機関発行の検査証明書の要否
+   ・事前届出（偶蹄類・馬・家禽・犬等の生体輸入）の要否
+   ・輸入可能な指定港・飛行場の制限
+   ・動物検疫所への届出・検査の手順
+
+5. 【BSE・高病原性鳥インフルエンザ等の特別規制】
+   対象品目に応じて、BSE関連・鳥インフルエンザ関連の特別な輸入条件があれば明記してください。
+
+6. 最後に「輸入禁止国・地域は発生状況により随時変更されます。最終確認は動物検疫所HP（https://www.maff.go.jp/aqs/）または動物検疫所にお問い合わせください」と付記してください。`);
+  }
+
+  function openClaude() { window.open('https://claude.ai', '_blank'); }
+
+  // ページロード時に念のため全プロンプトボックスを非表示に初期化
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.prompt-box').forEach(b => {
+      b.classList.remove('show');
+    });
+  });
+</script>
+</body>
 </html>
