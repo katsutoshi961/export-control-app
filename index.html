@@ -373,7 +373,8 @@
 </header>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('inquiry')">📋 項番調査</div>
+  <div class="tab active" onclick="switchTab('inquiry')">📋 輸出管理令</div>
+  <div class="tab" onclick="switchTab('gaiatsu')">🌐 外為法</div>
   <div class="tab" onclick="switchTab('revision')">🔔 改正確認</div>
   <div class="tab" onclick="switchTab('howto')">❓ 使い方</div>
 </div>
@@ -419,6 +420,94 @@
     </div>
   </div>
 
+  <!-- ───── パネル：外為法 ───── -->
+  <div id="panel-gaiatsu" class="panel">
+
+    <div class="notice">
+      <strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省または専門家にご確認ください。
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚖ 外為法 参照法令の基準日</div>
+      <div class="law-info-grid">
+        <div class="law-info-item">
+          <div class="lbl">参照法令</div>
+          <div class="val">外国為替及び外国貿易法・外国為替令</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">原令公布</div>
+          <div class="val">昭和24年法律第228号</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">AIの学習基準</div>
+          <div class="val warning">〜令和7年11月頃</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">最新確認済改正</div>
+          <div class="val warning">令和8年2月14日施行</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 直近の主な改正履歴（経産省確認済）</div>
+      <ul class="revision-list">
+        <li>
+          <span class="revision-date">R8.2.14施行</span>
+          <span class="revision-desc">国際輸出管理レジーム会合の合意に基づく外為令別表の規制対象貨物・技術の見直し</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.30施行</span>
+          <span class="revision-desc">役務通達・包括許可取扱要領の一部改正</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.10.9施行</span>
+          <span class="revision-desc">補完的輸出規制（キャッチオール規制）の大幅見直し。HSコードによる特定貨物の指定、一般国向け輸出への需要者要件確認義務化</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.5.28施行</span>
+          <span class="revision-desc">外為令・輸出令の改正（重要・新興品目等の追加、特定包括許可取得要件の緩和）</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.2.5施行</span>
+          <span class="revision-desc">外国ユーザーリストの改正（748社・組織に拡大。中国・イラン・ロシア等の増加が顕著）</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔍 外為法 該非判定プロンプト生成</div>
+      <label>品名・製品名 / 技術名</label>
+      <input type="text" id="gaiatsu-item" placeholder="例：暗号化通信モジュール、ドローン制御技術" />
+
+      <label>用途・提供先</label>
+      <textarea id="gaiatsu-use" placeholder="例：民生用通信機器への組み込み。提供先は米国企業。"></textarea>
+
+      <label>仕向国 / 技術提供先国</label>
+      <input type="text" id="gaiatsu-dest" placeholder="例：中国、UAE、インド" />
+
+      <label>取引種別</label>
+      <select id="gaiatsu-type">
+        <option value="cargo">貨物輸出（外為令別表）</option>
+        <option value="service">役務取引・技術提供（第25条）</option>
+        <option value="both">両方確認</option>
+        <option value="catchall">キャッチオール規制のみ確認</option>
+      </select>
+
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="generateGaiatsuPrompt()">プロンプトを生成する</button>
+
+      <div class="prompt-box" id="gaiatsu-prompt-box">
+        <div class="prompt-header">
+          <span class="prompt-label">生成されたプロンプト</span>
+          <button class="copy-btn" id="copy-btn-gaiatsu" onclick="copyPrompt('gaiatsu')">コピー</button>
+        </div>
+        <div class="prompt-text" id="gaiatsu-prompt-text"></div>
+        <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ───── パネル2：改正確認 ───── -->
   <div id="panel-revision" class="panel">
 
@@ -446,6 +535,7 @@
 
     <div class="card">
       <div class="card-title">📅 直近の主な改正履歴（経産省確認済）</div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;margin-top:4px;">▼ 輸出貿易管理令（経産省）</div>
       <ul class="revision-list">
         <li>
           <span class="revision-date">R8.2.14施行</span>
@@ -470,6 +560,30 @@
         <li>
           <span class="revision-date">R7.5.28施行</span>
           <span class="revision-desc">工作機械に対する輸出管理の見直し</span>
+        </li>
+      </ul>
+
+      <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;margin-top:14px;">▼ 外国為替令（経産省・財務省）</div>
+      <ul class="revision-list">
+        <li>
+          <span class="revision-date">R8.2.14施行</span>
+          <span class="revision-desc">外為令別表の規制対象貨物・技術の見直し（輸出令と同時改正）</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.30施行</span>
+          <span class="revision-desc">役務通達・包括許可取扱要領の一部改正</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.10.9施行</span>
+          <span class="revision-desc">キャッチオール規制の大幅見直し（HSコードによる特定貨物指定・需要者要件確認義務化）</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.5.28施行</span>
+          <span class="revision-desc">重要・新興品目の外為令別表への追加、特定包括許可取得要件の緩和</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.2.5施行</span>
+          <span class="revision-desc">外国ユーザーリスト改正（748社・組織に拡大）</span>
         </li>
       </ul>
     </div>
@@ -552,7 +666,7 @@
   // ── タブ切替 ──
   function switchTab(id) {
     document.querySelectorAll('.tab').forEach((t, i) => {
-      const ids = ['inquiry','revision','howto'];
+      const ids = ['inquiry','gaiatsu','revision','howto'];
       t.classList.toggle('active', ids[i] === id);
     });
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -660,6 +774,54 @@
   }
 
   // ── Claude.aiを開く ──
+  function generateGaiatsuPrompt() {
+    const item = document.getElementById('gaiatsu-item').value.trim();
+    const use  = document.getElementById('gaiatsu-use').value.trim();
+    const dest = document.getElementById('gaiatsu-dest').value.trim();
+    const type = document.getElementById('gaiatsu-type').value;
+
+    if (!item) { alert('品名・製品名または技術名を入力してください'); return; }
+
+    const typeLabel = {
+      cargo: '貨物輸出（外為令別表）',
+      service: '役務取引・技術提供（外為法第25条）',
+      both: '貨物輸出・役務取引（両方）',
+      catchall: 'キャッチオール規制（補完的輸出規制）'
+    }[type];
+
+    const prompt =
+`【外為法 該非判定依頼】
+
+▼ 調査対象：${typeLabel}
+▼ 品名・技術名：${item}
+▼ 用途・提供先：${use || '（未入力）'}
+▼ 仕向国・提供先国：${dest || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した外国為替及び外国貿易法・外国為替令の施行年月日を最初に明記してください。
+   例：「参照法令：外国為替令（令和〇年〇月〇日施行版）」
+
+2. 外為令別表への該当可能性を判定してください。
+   ・該当する可能性がある項番と該当理由
+   ・非該当の可能性とその根拠
+
+3. 役務取引・技術提供（外為法第25条）の観点から許可が必要になる可能性を判定してください。
+
+4. キャッチオール規制（令和7年10月9日施行の改正後）の観点から確認が必要な事項を明記してください。
+   ・特定貨物（HSコード指定）への該当可能性
+   ・需要者要件・用途要件の確認必要性
+
+5. 外国ユーザーリストへの掲載確認が必要な場合は指摘してください。
+
+6. 最後に「この回答は参考情報であり、最終的な該非判定は経済産業省または専門家への確認が必要です」と付記してください。`;
+
+    document.getElementById('gaiatsu-prompt-text').textContent = prompt;
+    const box = document.getElementById('gaiatsu-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
   function openClaude() {
     window.open('https://claude.ai', '_blank');
   }
