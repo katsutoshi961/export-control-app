@@ -3,6 +3,648 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>輸出貿易管理令 項番調査</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="輸出管理令" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --border: #30363d;
+      --accent: #e6a817;
+      --accent2: #c87e00;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --green: #3fb950;
+      --red: #f85149;
+      --blue: #58a6ff;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* ── ヘッダー ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .header-icon {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .law-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-top: 2px;
+    }
+    .law-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── タブ ── */
+    .tabs {
+      display: flex;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      gap: 4px;
+    }
+    .tab {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── メインコンテンツ ── */
+    .main { padding: 16px; max-width: 680px; margin: 0 auto; }
+
+    /* ── パネル ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── カード ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    /* ── フォーム要素 ── */
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+    label:first-of-type { margin-top: 0; }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    /* ── ボタン ── */
+    .btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:active { background: var(--accent2); transform: scale(0.98); }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .btn-secondary:active { background: var(--border); transform: scale(0.98); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      margin-top: 8px;
+    }
+    .btn-outline:active { background: rgba(88,166,255,0.1); }
+
+    /* ── プロンプト出力 ── */
+    .prompt-box {
+      display: none;
+      margin-top: 12px;
+    }
+    .prompt-box.show { display: block; }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .prompt-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .copy-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:active { background: var(--border); }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+    .prompt-text {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    /* ── 法令情報カード ── */
+    .law-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .law-info-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .law-info-item .lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .law-info-item .val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .law-info-item .val.warning { color: var(--accent); }
+    .law-info-item .val.ok { color: var(--green); }
+
+    /* 改正履歴リスト */
+    .revision-list { list-style: none; }
+    .revision-list li {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .revision-list li:last-child { border-bottom: none; }
+    .revision-date {
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+      min-width: 100px;
+    }
+    .revision-desc { color: var(--text-muted); }
+
+    /* ── ステップバッジ ── */
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .step-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+
+    /* ── 注意バナー ── */
+    .notice {
+      background: rgba(230,168,23,0.08);
+      border: 1px solid rgba(230,168,23,0.3);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .notice strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="header-icon">🛃</div>
+    <div>
+      <h1>輸出貿易管理令 項番調査</h1>
+    </div>
+  </div>
+  <div class="law-badge">
+    <span class="dot"></span>
+    参照法令：輸出貿易管理令（昭和24年政令第378号）&nbsp;／&nbsp;最終確認改正：<strong>令和8年2月14日施行</strong>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('inquiry')">📋 項番調査</div>
+  <div class="tab" onclick="switchTab('revision')">🔔 改正確認</div>
+  <div class="tab" onclick="switchTab('howto')">❓ 使い方</div>
+</div>
+
+<div class="main">
+
+  <!-- ───── パネル1：項番調査 ───── -->
+  <div id="panel-inquiry" class="panel active">
+
+    <div class="notice">
+      <strong>⚠ 免責事項：</strong>本ツールはAIへの参考プロンプト生成を目的とするものであり、法的判断の根拠となりません。最終判断は必ず経済産業省または専門家にご確認ください。
+    </div>
+
+    <div class="card">
+      <div class="card-title">貨物・役務の情報入力</div>
+
+      <label>品名・製品名</label>
+      <input type="text" id="item-name" placeholder="例：赤外線カメラモジュール" />
+
+      <label>用途・最終需要者</label>
+      <textarea id="item-use" placeholder="例：工場設備の温度監視用途。納入先は国内メーカー。"></textarea>
+
+      <label>仕向国</label>
+      <input type="text" id="dest-country" placeholder="例：中国、インド、ドイツ" />
+
+      <label>調査種別</label>
+      <select id="inquiry-type">
+        <option value="both">貨物・役務（両方）</option>
+        <option value="cargo">貨物のみ</option>
+        <option value="service">役務（技術）のみ</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" onclick="generateInquiryPrompt()">プロンプトを生成する</button>
+
+    <div class="prompt-box" id="inquiry-prompt-box">
+      <div class="prompt-header">
+        <span class="prompt-label">生成されたプロンプト</span>
+        <button class="copy-btn" id="copy-btn-inquiry" onclick="copyPrompt('inquiry')">コピー</button>
+      </div>
+      <div class="prompt-text" id="inquiry-prompt-text"></div>
+      <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+    </div>
+  </div>
+
+  <!-- ───── パネル2：改正確認 ───── -->
+  <div id="panel-revision" class="panel">
+
+    <div class="card">
+      <div class="card-title">⚖ 本ツール参照法令の基準日</div>
+      <div class="law-info-grid">
+        <div class="law-info-item">
+          <div class="lbl">参照法令</div>
+          <div class="val">輸出貿易管理令</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">原令公布</div>
+          <div class="val">昭和24年政令第378号</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">AIの学習基準</div>
+          <div class="val warning">〜令和7年11月頃</div>
+        </div>
+        <div class="law-info-item">
+          <div class="lbl">最新確認済改正</div>
+          <div class="val warning">令和8年2月14日施行</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 直近の主な改正履歴（経産省確認済）</div>
+      <ul class="revision-list">
+        <li>
+          <span class="revision-date">R8.2.14施行</span>
+          <span class="revision-desc">国際輸出管理レジーム会合の合意に基づく規制対象貨物の見直し（省令・通達）</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.30施行</span>
+          <span class="revision-desc">「輸出貿易管理令の運用について」等の通達一部改正</span>
+        </li>
+        <li>
+          <span class="revision-date">R8.1.14施行</span>
+          <span class="revision-desc">技術管理強化のための官民対話スキームに係る対象技術の追加（告示）</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.11.15施行</span>
+          <span class="revision-desc">噴霧乾燥器の規制見直し・プログラム記録媒体の同一再提供特例化・一時的な武器持ち出しの特例化</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.10.9施行</span>
+          <span class="revision-desc">補完的輸出規制の見直し</span>
+        </li>
+        <li>
+          <span class="revision-date">R7.5.28施行</span>
+          <span class="revision-desc">工作機械に対する輸出管理の見直し</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔍 最新改正確認プロンプト（経産省HPを確認する）</div>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">
+        以下のプロンプトをClaude.aiに貼り付けると、令和8年2月14日以降の改正有無を調査させることができます。
+      </p>
+      <button class="btn btn-primary" onclick="generateRevisionPrompt()">改正確認プロンプトを生成</button>
+
+      <div class="prompt-box" id="revision-prompt-box">
+        <div class="prompt-header">
+          <span class="prompt-label">改正確認プロンプト</span>
+          <button class="copy-btn" id="copy-btn-revision" onclick="copyPrompt('revision')">コピー</button>
+        </div>
+        <div class="prompt-text" id="revision-prompt-text"></div>
+        <button class="btn btn-outline" onclick="openClaude()">Claude.aiで開く →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── パネル3：使い方 ───── -->
+  <div id="panel-howto" class="panel">
+    <div class="card">
+      <div class="card-title">📋 項番調査の使い方</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">「項番調査」タブで品名・用途・仕向国を入力し、「プロンプトを生成する」をタップ</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">生成されたプロンプトを「コピー」し、「Claude.aiで開く」をタップ</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Claude.aiの入力欄に貼り付けて送信。AIが項番候補と根拠条文を回答</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-text">結果に「参照法令：令和〇年〇月〇日施行」が明記されているか確認する</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔔 改正確認の使い方</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">「改正確認」タブで直近の改正履歴を確認</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">「改正確認プロンプトを生成」をタップしてプロンプトをコピー</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Claude.aiに貼り付けて送信。経産省HPの改正情報ページを確認した結果を返す</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-text">新たな改正が確認されたら、このツールの改正履歴に追記して管理する</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠ 重要な注意点</div>
+      <p style="font-size:12px; color:var(--text-muted); line-height:1.8;">
+        ・AIの回答はあくまで<strong style="color:var(--accent)">参考情報</strong>です。<br>
+        ・最終的な該非判定の責任は通関業者・輸出者が負います。<br>
+        ・グレーゾーン案件は必ず経済産業省へ照会してください。<br>
+        ・AIの知識は令和7年11月頃までが基準です。<br>
+        ・「改正確認」タブで定期的に最新情報を確認することを推奨します。
+      </p>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // ── タブ切替 ──
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      const ids = ['inquiry','revision','howto'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  // ── 項番調査プロンプト生成 ──
+  function generateInquiryPrompt() {
+    const name = document.getElementById('item-name').value.trim();
+    const use  = document.getElementById('item-use').value.trim();
+    const dest = document.getElementById('dest-country').value.trim();
+    const type = document.getElementById('inquiry-type').value;
+
+    if (!name) { alert('品名・製品名を入力してください'); return; }
+
+    const typeLabel = type === 'cargo' ? '貨物' : type === 'service' ? '役務（技術）' : '貨物・役務（両方）';
+
+    const prompt =
+`【輸出貿易管理令 項番調査依頼】
+
+▼ 調査対象：${typeLabel}
+▼ 品名・製品名：${name}
+▼ 用途・最終需要者：${use || '（未入力）'}
+▼ 仕向国：${dest || '（未入力）'}
+
+以下の手順で調査・回答してください。
+
+1. 参照した輸出貿易管理令の施行年月日を最初に明記してください。
+   例：「参照法令：輸出貿易管理令（令和〇年〇月〇日施行版）」
+
+2. 上記貨物・役務が輸出貿易管理令別表第一の該当項番候補を3〜5件提示してください。
+   各候補について以下を明記：
+   ・項番（例：2の項(1)）
+   ・該当理由（スペック・用途との対応）
+   ・非該当の可能性がある場合はその根拠も記載
+
+3. 補完的輸出規制（キャッチオール規制）の観点から懸念がある場合は明記してください。
+
+4. 確認を推奨する関係省令・告示があれば併記してください。
+
+5. 最後に「この回答は参考情報であり、最終的な該非判定は経済産業省または専門家への確認が必要です」と付記してください。`;
+
+    document.getElementById('inquiry-prompt-text').textContent = prompt;
+    const box = document.getElementById('inquiry-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── 改正確認プロンプト生成 ──
+  function generateRevisionPrompt() {
+    const prompt =
+`【輸出貿易管理令 改正確認依頼】
+
+以下の条件でウェブ検索を行い、最新の改正情報を調査してください。
+
+▼ 調査対象法令：輸出貿易管理令（昭和24年政令第378号）
+▼ 確認済み最終改正：令和8年2月14日施行
+▼ 調査対象：令和8年2月14日以降に公布・施行された改正の有無
+
+【調査手順】
+1. 経済産業省 安全保障貿易管理ページ（https://www.meti.go.jp/policy/anpo/law09-2.html）を確認する
+2. 令和8年2月14日より後の日付で記載された改正情報があるか確認する
+3. 改正がある場合：施行日・改正内容の概要・影響する規制品目（別表番号）を箇条書きで報告する
+4. 改正がない場合：「令和8年2月14日施行以降の改正は確認されませんでした」と明記する
+
+【出力形式】
+・確認日時（本日の日付）
+・確認先URL
+・改正有無の結論
+・改正がある場合の詳細リスト
+・注意すべき品目カテゴリがあれば追記`;
+
+    document.getElementById('revision-prompt-text').textContent = prompt;
+    const box = document.getElementById('revision-prompt-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── コピー ──
+  function copyPrompt(type) {
+    const text = document.getElementById(type + '-prompt-text').textContent;
+    const btn  = document.getElementById('copy-btn-' + type);
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ コピー済';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ コピー済';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ── Claude.aiを開く ──
+  function openClaude() {
+    window.open('https://claude.ai', '_blank');
+  }
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>輸出入法令適合確認</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
